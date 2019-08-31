@@ -1,0 +1,26 @@
+- id: '1567199368534'
+  alias: HA boot - turn off all lights
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition:
+  - condition: state
+    entity_id: input_boolean.maintenance_mode
+    state: 'off'
+  action:
+  - delay: 00:01
+  - service: light.turn_off
+  - data:
+      entity_id: input_boolean.maintenance_mode
+    service: input_boolean.turn_off
+- id: '1567201768135'
+  alias: HA - enter maintenance mode
+  trigger:
+  - event: shutdown
+    platform: homeassistant
+  condition: []
+  action:
+  - alias: ''
+    data:
+      entity_id: input_boolean.maintenance_mode
+    service: input_boolean.turn_on
