@@ -1,26 +1,30 @@
 - id: '1567199368534'
-  alias: HA boot - turn off all lights
+  alias: HA recovers after power outage - turn off all lights
   trigger:
-  - event: start
-    platform: homeassistant
+  - platform: homeassistant
+    event: start
   condition:
   - condition: state
     entity_id: input_boolean.maintenance_mode
     state: 'off'
   action:
-  - delay: 00:01
+  - delay: 00:00:30
   - service: light.turn_off
-  - data:
-      entity_id: input_boolean.maintenance_mode
-    service: input_boolean.turn_off
+    entity_id: group.all_lights
 - id: '1567201768135'
-  alias: HA - enter maintenance mode
+  alias: HA manual restart - enter maintenance mode
   trigger:
-  - event: shutdown
-    platform: homeassistant
-  condition: []
+  - platform: homeassistant
+    event: shutdown
   action:
-  - alias: ''
-    data:
-      entity_id: input_boolean.maintenance_mode
-    service: input_boolean.turn_on
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.maintenance_mode
+- id: '1567257701236'
+  alias: HA - leave maintenance mode
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay: 00:00:60
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.maintenance_mode
