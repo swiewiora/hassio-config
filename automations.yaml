@@ -8,23 +8,23 @@
     entity_id: input_boolean.maintenance_mode
     state: 'off'
   action:
-  - data: {}
+  - data:
+      entity_id: group.all_lights
     entity_id: group.all_lights
     service: light.turn_off
+  - data:
+      message: Home Assistant started after unexpected shutdown.
+      title: Home Assistant started
+    service: notify.html5
+  - delay: 00:00:10
 - id: '1567201768135'
   alias: HA manual restart - enter maintenance mode
   trigger:
-  - platform: homeassistant
-    event: shutdown
+  - event: shutdown
+    platform: homeassistant
   action:
-  - service: input_boolean.turn_on
+  - data:
+      entity_id: input_boolean.maintenance_mode
     entity_id: input_boolean.maintenance_mode
-- id: '1567257701236'
-  alias: HA - leave maintenance mode
-  trigger:
-  - platform: homeassistant
-    event: start
-  action:
-  - delay: 00:00:60
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.maintenance_mode
+    service: input_boolean.turn_on
+  - delay: 00:00:05
