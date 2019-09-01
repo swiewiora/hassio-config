@@ -17,7 +17,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 
 logger:
-  default: info
+  default: critical
   
 input_boolean:
   maintenance_mode:
@@ -29,3 +29,27 @@ tuya:
   password: !secret tuya_password
   country_code: 420
   platform: smart_life
+
+google_assistant:
+  project_id: ***REMOVED***
+  entity_config:
+    group.all_automations:
+      expose: false
+
+notify:
+  - name: html5
+    platform: html5
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret vapid_email
+  - name: all
+    platform: group
+    services:
+      - service: html5
+        data:
+          target: ['x2pro', 'n550']
+      - service: ios
+        data:
+          target: 'ios_i7sw'
+
+ios:
