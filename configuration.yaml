@@ -53,3 +53,8 @@ notify:
           target: 'ios_i7sw'
 
 ios:
+
+asuswrt:
+  host: !secret asuswrt_host
+  username: !secret asuswrt_username
+  ssh_key: /ssl/asuswrt_ssh
