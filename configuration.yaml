@@ -51,6 +51,9 @@ notify:
       - service: ios
         data:
           target: 'ios_i7sw'
+  - name: telegram
+    platform: telegram
+    chat_id: !secret telegram_chat_id
 
 ios:
 
@@ -58,3 +61,12 @@ asuswrt:
   host: !secret asuswrt_host
   username: !secret asuswrt_username
   ssh_key: /ssl/asuswrt_ssh
+  sensors:
+    - download_speed
+    - upload_speed
+
+telegram_bot:
+  - platform: broadcast
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - !secret telegram_chat_id
