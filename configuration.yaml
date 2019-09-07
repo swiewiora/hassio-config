@@ -1,4 +1,3 @@
-
 default_config:
 
 http:
@@ -66,4 +65,7 @@ logger:
   default: warning
 history:
 recorder:
-  db_url: sqlite:///tmp/home-assistant_v2.db
+  db_url: sqlite:////tmp/home-assistant_v2.db
+
+frontend:
+  themes: !include themes.yaml
