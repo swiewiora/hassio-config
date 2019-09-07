@@ -1,24 +1,15 @@
 
-# Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   base_url: ***REMOVED***
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
 
-# Text to speech
-tts:
-  - platform: google_translate
-
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 
-logger:
-  default: critical
-  
 input_boolean:
   maintenance_mode:
     name: Maintenance mode
@@ -70,3 +61,9 @@ telegram_bot:
     api_key: !secret telegram_api_key
     allowed_chat_ids:
       - !secret telegram_chat_id
+
+logger:
+  default: warning
+history:
+recorder:
+  db_url: sqlite:///tmp/home-assistant_v2.db
