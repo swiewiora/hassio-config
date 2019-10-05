@@ -1,0 +1,7 @@
+bulbs:
+  name: Light bulbs
+  entities:
+    - light.ikea_bulb_1
+    - light.ikea_bulb_2
+    - light.osram_bulb_1
+    - light.osram_bulb_2
