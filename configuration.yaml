@@ -14,7 +14,7 @@ input_boolean:
     name: Maintenance mode
     icon: mdi:restart
   heating_timer:
-    name: Heating timer
+    name: Use heating timer
     icon: mdi:toggle-switch
 
 tuya:
@@ -75,60 +75,70 @@ frontend:
 
 climate:
   - platform: generic_thermostat
-    name: Heating
+    name: Room Heating
     heater: switch.ikea_plug
     target_sensor: sensor.temperature_2
-    min_temp: 10
+    away_temp: 15
+    min_temp: 15
     max_temp: 25
-    ac_mode: false
     hot_tolerance: 1
     cold_tolerance: 1
-    min_cycle_duration:
-      minutes: 1
+  - platform: generic_thermostat
+    name: Bathroom Heating
+    heater: switch.osram_plug_4
+    target_sensor: sensor.temperature_7
+    away_temp: 15
+    min_temp: 15
+    max_temp: 25
+    hot_tolerance: 1
+    cold_tolerance: 1
 
 input_number:
-  heating_temperature:
-    name: Temperature
-    min: 10
+  target_temp_room_high:
+    name: Room High Target Temperature
+    min: 15
     max: 25
     step: 0.5
-    icon: mdi:thermometer
-
-sensor:
-  - platform: time_date
-    display_options:
-      - 'time'
+    unit_of_measurement: '*C'
+    icon: mdi:arrow-top-right-thick
+  target_temp_room_low:
+    name: Room Low Target Temperature
+    min: 15
+    max: 25
+    step: 0.5
+    unit_of_measurement: '*C'
+    icon: mdi:arrow-bottom-right-thick
+  target_temp_bathroom_high:
+    name: Bathroom High Target Temperature
+    min: 15
+    max: 25
+    step: 0.5
+    unit_of_measurement: '*C'
+    icon: mdi:arrow-top-right-thick
+  target_temp_bathroom_low:
+    name: Bathroom Low Target Temperature
+    min: 15
+    max: 25
+    step: 0.5
+    unit_of_measurement: '*C'
+    icon: mdi:arrow-bottom-right-thick
 
 input_datetime:
   weekday_morning_start:
     name: Week day morning start
     has_time: true
-    has_date: false
   weekday_morning_stop:
     name: Week day morning stop
     has_time: true
-    has_date: false
-  weekend_morning_start:
-    name: Weekend morning start
-    has_time: true
-    has_date: false
-  weekend_morning_stop:
-    name: Weekend morning stop
-    has_time: true
-    has_date: false
   weekday_evening_start:
     name: Week day evening start
     has_time: true
-    has_date: false
   weekday_evening_stop:
     name: Week day evening stop
     has_time: true
-    has_date: false
-  weekend_evening_start:
-    name: Weekend evening start
+  weekend_morning_start:
+    name: Weekend day start
     has_time: true
-    has_date: false
-  weekend_evening_stop:
-    name: Weekend evening stop
+  weekend_morning_stop:
+    name: Weekend day stop
     has_time: true
-    has_date: false
