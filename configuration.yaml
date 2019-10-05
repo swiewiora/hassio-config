@@ -13,7 +13,10 @@ input_boolean:
   maintenance_mode:
     name: Maintenance mode
     icon: mdi:restart
-    
+  heating_timer:
+    name: Heating timer
+    icon: mdi:toggle-switch
+
 tuya:
   username: !secret tuya_login
   password: !secret tuya_password
@@ -69,3 +72,63 @@ recorder:
 
 frontend:
   themes: !include themes.yaml
+
+climate:
+  - platform: generic_thermostat
+    name: Heating
+    heater: switch.ikea_plug
+    target_sensor: sensor.temperature_2
+    min_temp: 10
+    max_temp: 25
+    ac_mode: false
+    hot_tolerance: 1
+    cold_tolerance: 1
+    min_cycle_duration:
+      minutes: 1
+
+input_number:
+  heating_temperature:
+    name: Temperature
+    min: 10
+    max: 25
+    step: 0.5
+    icon: mdi:thermometer
+
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+
+input_datetime:
+  weekday_morning_start:
+    name: Week day morning start
+    has_time: true
+    has_date: false
+  weekday_morning_stop:
+    name: Week day morning stop
+    has_time: true
+    has_date: false
+  weekend_morning_start:
+    name: Weekend morning start
+    has_time: true
+    has_date: false
+  weekend_morning_stop:
+    name: Weekend morning stop
+    has_time: true
+    has_date: false
+  weekday_evening_start:
+    name: Week day evening start
+    has_time: true
+    has_date: false
+  weekday_evening_stop:
+    name: Week day evening stop
+    has_time: true
+    has_date: false
+  weekend_evening_start:
+    name: Weekend evening start
+    has_time: true
+    has_date: false
+  weekend_evening_stop:
+    name: Weekend evening stop
+    has_time: true
+    has_date: false
