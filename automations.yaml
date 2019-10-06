@@ -34,7 +34,10 @@
     from: 'off'
     platform: state
     to: 'on'
-  condition: []
+  condition:
+  - condition: state
+    entity_id: person.sebastian
+    state: not_home
   action:
   - data:
       message: Entrance door opened!
@@ -88,6 +91,9 @@
     data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
+  - service: notify.html5
+    data:
+      message: Heating morning week day rule started
 - id: heating_evening_off_wd
   alias: heating - weekday night
   trigger:
@@ -109,10 +115,13 @@
     entity_id: person.sebastian
     state: home
   action:
-    service: climate.set_temperature
+  - service: climate.set_temperature
     data_template:
       entity_id: climate.room_heating
       temperature: '{{ states(''input_number.target_temp_room_low'') }}'
+  - service: notify.html5
+    data:
+      message: Heating night week day rule started
 - id: heating_morning_on_we
   alias: heating - weekend morning
   trigger:
@@ -131,10 +140,13 @@
     entity_id: person.sebastian
     state: home
   action:
-    service: climate.set_temperature
+  - service: climate.set_temperature
     data_template:
       entity_id: climate.room_heating
       temperature: '{{ states(''input_number.target_temp_room_high'') }}'
+  - service: notify.html5
+    data:
+      message: Heating morning weekend rule started
 - id: heating_evening_off_we
   alias: heating - weekend night
   trigger:
@@ -153,10 +165,13 @@
     entity_id: person.sebastian
     state: home
   action:
-    service: climate.set_temperature
+  - service: climate.set_temperature
     data_template:
       entity_id: climate.room_heating
       temperature: '{{ states(''input_number.target_temp_room_low'') }}'
+  - service: notify.html5
+    data:
+      message: Heating night weekend rule started
 - id: heating_on_when_home
   alias: heating - turn heating on on arrival
   trigger:
@@ -172,6 +187,9 @@
     data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+  - service: notify.html5
+    data:
+      message: Heating turned on
 - id: heating_off_when_away
   alias: heating - turn off when we leave home
   trigger:
@@ -184,6 +202,9 @@
   - data:
       preset_mode: away
     service: climate.set_preset_mode
+  - service: notify.html5
+    data:
+      message: Heating turned off
 - id: '1570365018863'
   alias: heating - kitchen on
   trigger:
@@ -196,6 +217,9 @@
     domain: switch
     entity_id: switch.ikea_plug_2
     type: turn_on
+  - service: notify.html5
+    data:
+      message: Heating in the kitchen turned on
 - id: '1570365069845'
   alias: heating - kitchen off
   trigger:
@@ -208,6 +232,9 @@
     domain: switch
     entity_id: switch.ikea_plug_2
     type: turn_off
+  - service: notify.html5
+    data:
+      message: Heating in the kitchen turned off
 - id: '1570130746943'
   alias: remote bedroom bulb
   trigger:

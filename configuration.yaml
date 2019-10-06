@@ -39,11 +39,7 @@ notify:
     platform: group
     services:
       - service: html5
-        data:
-          target: ['x2pro', 'n550']
-      - service: ios
-        data:
-          target: 'ios_i7sw'
+      - service: ios_i7sw
   - name: telegram
     platform: telegram
     chat_id: !secret telegram_chat_id
