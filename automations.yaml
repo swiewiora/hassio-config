@@ -1,46 +1,3 @@
-- id: '1567199368534'
-  alias: HA recovers after power outage - turn off all lights
-  trigger:
-  - event: start
-    platform: homeassistant
-  condition:
-  - condition: state
-    entity_id: input_boolean.maintenance_mode
-    state: 'off'
-  action:
-  - data:
-      entity_id: group.all_lights
-    entity_id: group.all_lights
-    service: light.turn_off
-  - data:
-      message: Home Assistant started after unexpected shutdown.
-      title: Home Assistant started
-    service: notify.telegram
-  - delay: 00:00:10
-- id: '1567201768135'
-  alias: HA manual restart - enter maintenance mode
-  trigger:
-  - event: shutdown
-    platform: homeassistant
-  action:
-  - data:
-      entity_id: input_boolean.maintenance_mode
-    entity_id: input_boolean.maintenance_mode
-    service: input_boolean.turn_on
-  - delay: 00:00:05
-- id: '1568107310243'
-  alias: Entrance door opened
-  trigger:
-  - entity_id: binary_sensor.openclose_11
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition: []
-  action:
-  - data:
-      message: Entrance door opened!
-      title: Burglary alarm
-    service: telegram_bot.send_message
 - id: '1568108501657'
   alias: Freezer opened
   trigger:
@@ -70,20 +27,201 @@
   - data:
       message: Water sensor triggered!
     service: telegram_bot.send_message
+- id: '1568107310243'
+  alias: Entrance door opened
+  trigger:
+  - entity_id: binary_sensor.openclose_11
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Entrance door opened!
+      title: Burglary alarm
+    service: telegram_bot.send_message
+- id: '1567199368534'
+  alias: HA recovers after power outage - turn off all lights
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition:
+  - condition: state
+    entity_id: input_boolean.maintenance_mode
+    state: 'off'
+  action:
+  - data:
+      entity_id: group.all_lights
+    entity_id: group.all_lights
+    service: light.turn_off
+  - data:
+      message: Home Assistant started after unexpected shutdown.
+      title: Home Assistant started
+    service: notify.telegram
+  - delay: 00:00:10
+- id: heating_morning_on_wd
+  alias: heating - weekday morning
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == (states(''input_datetime.weekday_start.attributes.timestamp'')
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
+- id: heating_evening_off_wd
+  alias: heating - weekday night
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == (states(''input_datetime.weekday_end.attributes.timestamp'')
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+    service: climate.set_temperature
+    data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_low'') }}'
+- id: heating_morning_on_we
+  alias: heating - weekend morning
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == (states(''input_datetime.weekend_start.attributes.timestamp'')
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+    service: climate.set_temperature
+    data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
+- id: heating_evening_off_we
+  alias: heating - weekend night
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == (states(''input_datetime.weekend_end.attributes.timestamp'')
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+    service: climate.set_temperature
+    data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_low'') }}'
+- id: heating_on_when_home
+  alias: heating - turn heating on on arrival
+  trigger:
+  - entity_id: person.sebastian
+    from: not_home
+    platform: state
+    to: home
+  action:
+  - data:
+      preset_mode: none
+    service: climate.set_preset_mode
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+- id: heating_off_when_away
+  alias: heating - turn off when we leave home
+  trigger:
+  - entity_id: person.sebastian
+    for: 00:10:00
+    from: home
+    platform: state
+    to: not_home
+  action:
+  - data:
+      preset_mode: away
+    service: climate.set_preset_mode
+- id: '1570365018863'
+  alias: heating - kitchen on
+  trigger:
+  - platform: template
+    value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
+      - (states(''sensor.temperature_2'') | float) > 3}}'
+  condition: []
+  action:
+  - device_id: b95dc98ae71941c68e4f32961e25ae2a
+    domain: switch
+    entity_id: switch.ikea_plug_2
+    type: turn_on
+- id: '1570365069845'
+  alias: heating - kitchen off
+  trigger:
+  - platform: template
+    value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
+      - (states(''sensor.temperature_2'') | float) < 3}}'
+  condition: []
+  action:
+  - device_id: b95dc98ae71941c68e4f32961e25ae2a
+    domain: switch
+    entity_id: switch.ikea_plug_2
+    type: turn_off
 - id: '1570130746943'
   alias: remote bedroom bulb
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
     subtype: dim_up
     type: remote_button_short_press
-  - device_id: 48ca513701da4fa2a32ed8b1d5ce3844
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
     platform: device
     subtype: turn_on
     type: remote_button_short_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
     domain: deconz
     platform: device
     subtype: dim_up
@@ -97,17 +235,17 @@
 - id: '1570212713167'
   alias: remote living room bulb
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
-    domain: deconz
-    platform: device
-    subtype: turn_on
-    type: remote_button_short_press
-  - device_id: 48ca513701da4fa2a32ed8b1d5ce3844
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
     platform: device
     subtype: turn_off
     type: remote_button_short_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
     domain: deconz
     platform: device
     subtype: right
@@ -153,17 +291,17 @@
 - id: '1570214294763'
   alias: remote entrance bulb
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
-    domain: deconz
-    platform: device
-    subtype: dim_down
-    type: remote_button_short_press
-  - device_id: 50203f86b28a4d988518bf0d5a621cf0
+  - device_id: 938fddfde7134636aa05d12b4f4df16b
     domain: deconz
     platform: device
     subtype: turn_on
     type: remote_button_short_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
     domain: deconz
     platform: device
     subtype: dim_down
@@ -177,17 +315,17 @@
 - id: '1570214365100'
   alias: remote bathroom bulb
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
-    domain: deconz
-    platform: device
-    subtype: left
-    type: remote_button_short_press
-  - device_id: 50203f86b28a4d988518bf0d5a621cf0
+  - device_id: 938fddfde7134636aa05d12b4f4df16b
     domain: deconz
     platform: device
     subtype: turn_off
     type: remote_button_short_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
     domain: deconz
     platform: device
     subtype: left
@@ -201,16 +339,11 @@
 - id: '1570215042351'
   alias: remote ceiling light switch
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
-    subtype: right
-    type: remote_button_long_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
-    domain: deconz
-    platform: device
-    subtype: right
-    type: remote_button_long_press
+    subtype: left
+    type: remote_button_short_press
   condition: []
   action:
   - device_id: b79bdaab2df4423e82938a62556d1db6
@@ -220,15 +353,10 @@
 - id: '1570215199936'
   alias: remote hood switch
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
-    subtype: dim_down
-    type: remote_button_long_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
-    domain: deconz
-    platform: device
-    subtype: turn_on
+    subtype: left
     type: remote_button_short_press
   condition: []
   action:
@@ -239,16 +367,11 @@
 - id: '1570215295449'
   alias: remote sink lamp switch
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
     subtype: left
-    type: remote_button_long_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
-    domain: deconz
-    platform: device
-    subtype: dim_down
-    type: remote_button_long_press
+    type: remote_button_short_press
   condition: []
   action:
   - device_id: a5eff051123d4f848250fd350f95d86b
@@ -258,232 +381,34 @@
 - id: '1570219780878'
   alias: remote oven switch
   trigger:
-  - device_id: a52933afa45e4307bc7f6e89e63dd2fe
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
-    subtype: dim_up
-    type: remote_button_long_press
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
-    domain: deconz
-    platform: device
-    subtype: turn_on
-    type: remote_button_long_press
+    subtype: left
+    type: remote_button_short_press
   condition: []
   action:
-  - device_id: 779b06691de74aff99ac35374e604d12
-    domain: switch
-    entity_id: switch.osram_plug_2
-    type: toggle
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_short_press
 - id: '1570225511440'
   alias: remote mirror lamp switch
   trigger:
-  - device_id: e343480d7c4b4d69bdf7243114752ed8
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
     subtype: left
     type: remote_button_long_press
   condition: []
   action:
-  - device_id: aa35c565e01747498ba9aae5014c7164
+  - device_id: 3ffe83ae8d374484ab3f3f4bf93e7506
     domain: switch
     entity_id: switch.osram_plug_3
     type: toggle
-
-- id: heating_morning_on_wd
-  alias: heating - weekday morning
-  trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states('input_datetime.weekday_start.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
-  condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-  - condition: state
-    entity_id: input_boolean.heating_timer
-    state: 'on'
-  - condition: state
-    entity_id: person.sebastian
-    state: 'home'
-  action:
-  - service: climate.set_temperature
-    data_template:
-      entity_id: climate.room_heating
-      temperature: "{{ states('input_number.target_temp_room_high') }}"
-  - service: climate.set_temperature
-    data_template:
-      entity_id: climate.bathroom_heating
-      temperature: "{{ states('input_number.target_temp_bathroom_high') }}"
-- id: heating_evening_off_wd
-  alias: heating - weekday night
-  trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states('input_datetime.weekday_end.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
-  condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-  - condition: state
-    entity_id: input_boolean.heating_timer
-    state: 'on'
-  - condition: state
-    entity_id: person.sebastian
-    state: 'home'
-  action:
-    service: climate.set_temperature
-    data_template:
-      entity_id: climate.room_heating
-      temperature: "{{ states('input_number.target_temp_room_low') }}"
-- id: heating_morning_on_we
-  alias: heating - weekend morning
-  trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states('input_datetime.weekend_start.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
-  condition:
-  - condition: time
-    weekday:
-    - sat
-    - sun
-  - condition: state
-    entity_id: input_boolean.heating_timer
-    state: 'on'
-  - condition: state
-    entity_id: person.sebastian
-    state: 'home'
-  action:
-    service: climate.set_temperature
-    data_template:
-      entity_id: climate.room_heating
-      temperature: "{{ states('input_number.target_temp_room_high') }}"
-- id: heating_evening_off_we
-  alias: heating - weekend night
-  trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states('input_datetime.weekend_end.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
-  condition:
-  - condition: time
-    weekday:
-    - sat
-    - sun
-  - condition: state
-    entity_id: input_boolean.heating_timer
-    state: 'on'
-  - condition: state
-    entity_id: person.sebastian
-    state: 'home'
-  action:
-    service: climate.set_temperature
-    data_template:
-      entity_id: climate.room_heating
-      temperature: "{{ states('input_number.target_temp_room_low') }}"
-- id: heating_on_when_home
-  alias: heating - turn heating on on arrival
-  trigger:
-  - entity_id: person.sebastian
-    from: not_home
-    platform: state
-    to: home
-  action:
-  - data:
-      preset_mode: none
-    service: climate.set_preset_mode
-  - service: climate.set_temperature
-    data_template:
-      entity_id: climate.bathroom_heating
-      temperature: "{{ states('input_number.target_temp_bathroom_low') }}"
-- id: heating_off_when_away
-  alias: heating - turn off when we leave home
-  trigger:
-  - entity_id: person.sebastian
-    for: 00:10:00
-    from: home
-    platform: state
-    to: not_home
-  action:
-  - data:
-      preset_mode: away
-    service: climate.set_preset_mode
-
-# - id: heating_morning_off_wd
-#   alias: heating - turn heating off (weekday mornings)
-#   trigger:
-#     platform: template
-#     value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekday_morning_stop.attributes.timestamp
-#       | int | timestamp_custom(''%H:%M'', False)) }}'
-#   condition:
-#   - condition: time
-#     weekday:
-#     - mon
-#     - tue
-#     - wed
-#     - thu
-#     - fri
-#   - condition: state
-#     entity_id: input_boolean.heating_timer
-#     state: 'on'
-#   action:
-#     - service: climate.set_preset_mode
-#       data:
-#         preset_mode: away
-# - id: heating_evening_on_wd
-#   alias: heating - turn heating on (weekday evenings)
-#   trigger:
-#     platform: template
-#     value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekday_evening_start.attributes.timestamp
-#       | int | timestamp_custom(''%H:%M'', False)) }}'
-#   condition:
-#   - condition: time
-#     weekday:
-#     - mon
-#     - tue
-#     - wed
-#     - thu
-#     - fri
-#   - condition: state
-#     entity_id: input_boolean.heating_timer
-#     state: 'on'
-#   - condition: state
-#     entity_id: person.sebastian
-#     state: 'home'
-#   action:
-#     service: climate.set_temperature
-#     data_template:
-#       entity_id: climate.room_heating
-#       temperature: "{{ states('input_number.target_temp_room_high') }}"
-# - id: heating_morning_off_we
-#   alias: heating - turn heating off (weekend mornings)
-#   trigger:
-#     platform: template
-#     value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekend_morning_stop.attributes.timestamp
-#       | int | timestamp_custom(''%H:%M'', False)) }}'
-#   condition:
-#     condition: time
-#     weekday:
-#     - sat
-#     - sun
-#   action:
-#     service: input_boolean.turn_off
-#     data_template:
-#       entity_id: input_boolean.heating_timer
-# - id: heating_evening_on_we
-  # alias: heating - turn heating on (weekend evenings)
-  # trigger:
-  #   platform: template
-  #   value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekend_evening_start.attributes.timestamp
-  #     | int | timestamp_custom(''%H:%M'', False)) }}'
-  # condition:
-  # - condition: time
-  #   weekday:
-  #   - sat
-  #   - sun
-  # action:
-  #   service: input_boolean.turn_on
-  #   data_template:
-  #     entity_id: input_boolean.heating_timer

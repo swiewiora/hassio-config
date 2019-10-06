@@ -122,6 +122,25 @@ input_number:
     step: 0.5
     unit_of_measurement: '*C'
     icon: mdi:arrow-bottom-right-thick
+    
+  light_step:
+    name: 'Step the lights this much'
+    initial: 20
+    min: 1
+    max: 64
+    step: 1
+  light_minimum:
+    name: 'No dimmer than this'
+    initial: 5
+    min: 1
+    max: 255
+    step: 1
+  light_maximum:
+    name: 'No brighter than this'
+    initial: 255
+    min: 50
+    max: 255
+    step: 1
 
 input_datetime:
   weekday_start:
