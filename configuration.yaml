@@ -124,21 +124,20 @@ input_number:
     icon: mdi:arrow-bottom-right-thick
 
 input_datetime:
-  weekday_morning_start:
-    name: Week day morning start
+  weekday_start:
+    name: Week day morning
     has_time: true
-  weekday_morning_stop:
-    name: Week day morning stop
+  weekday_end:
+    name: Week day night
     has_time: true
-  weekday_evening_start:
-    name: Week day evening start
+  weekend_start:
+    name: Weekend morning
     has_time: true
-  weekday_evening_stop:
-    name: Week day evening stop
+  weekend_end:
+    name: Weekend night
     has_time: true
-  weekend_morning_start:
-    name: Weekend day start
-    has_time: true
-  weekend_morning_stop:
-    name: Weekend day stop
-    has_time: true
+
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'

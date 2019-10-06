@@ -293,8 +293,7 @@
   alias: heating - weekday morning
   trigger:
     platform: template
-    value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekday_morning_start.attributes.timestamp
-      | int | timestamp_custom(''%H:%M'', False)) }}'
+    value_template: "{{ states('sensor.time') == (states('input_datetime.weekday_start.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
   condition:
   - condition: time
     weekday:
@@ -322,8 +321,7 @@
   alias: heating - weekday night
   trigger:
     platform: template
-    value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekday_evening_stop.attributes.timestamp
-      | int | timestamp_custom(''%H:%M'', False)) }}'
+    value_template: "{{ states('sensor.time') == (states('input_datetime.weekday_end.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
   condition:
   - condition: time
     weekday:
@@ -347,8 +345,7 @@
   alias: heating - weekend morning
   trigger:
     platform: template
-    value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekend_morning_start.attributes.timestamp
-      | int | timestamp_custom(''%H:%M'', False)) }}'
+    value_template: "{{ states('sensor.time') == (states('input_datetime.weekend_start.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
   condition:
   - condition: time
     weekday:
@@ -369,8 +366,7 @@
   alias: heating - weekend night
   trigger:
     platform: template
-    value_template: '{{ states(''sensor.time'') == (states.input_datetime.weekend_evening_stop.attributes.timestamp
-      | int | timestamp_custom(''%H:%M'', False)) }}'
+    value_template: "{{ states('sensor.time') == (states('input_datetime.weekend_end.attributes.timestamp') | int | timestamp_custom('%H:%M', False)) }}"
   condition:
   - condition: time
     weekday:
