@@ -456,3 +456,69 @@
     data:
       entity_id: switch.081021853c71bf3edb01
     service: switch.toggle
+- id: '1570485402465'
+  alias: 'heating - notify ceiling switched on '
+  trigger:
+  - entity_id: switch.ikea_plug
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Ceiling heating panel turned on
+    service: notify.html5
+- id: '1570485651434'
+  alias: heating - notify ceiling switched off
+  trigger:
+  - entity_id: switch.ikea_plug
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      message: Ceiling heating panel switched off
+    service: notify.html5
+- id: '1570485730562'
+  alias: heating - notify wall panel switched on
+  trigger:
+  - entity_id: switch.ikea_plug_2
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Heating wall panel switched on
+    service: notify.html5
+- id: '1570486021472'
+  alias: heating - notify wall panel switched off
+  trigger:
+  - entity_id: switch.ikea_plug_2
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      message: Wall heating panel turned off
+    service: notify.html5
+- id: '1570486105628'
+  alias: heating - notify radiator turned on
+  trigger:
+  - entity_id: switch.osram_plug_4
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Bathroom radiator turned on
+    service: notify.html5
+- id: '1570486156080'
+  alias: heating - notify radiator turned off
+  trigger:
+  - entity_id: switch.osram_plug_4
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      message: Bathroom radiator turned off
+    service: notify.html5
