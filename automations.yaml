@@ -192,18 +192,19 @@
   trigger:
   - platform: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
-      - (states(''sensor.temperature_2'') | float) > 2}}'
+      - (states(''sensor.temperature_2'') | float) > 1.5}}'
   condition: []
   action:
-  - device_id: ''
-    domain: ''
-    entity_id: ''
+  - device_id: b95dc98ae71941c68e4f32961e25ae2a
+    domain: switch
+    entity_id: switch.ikea_plug_2
+    type: turn_on
 - id: '1570365069845'
   alias: heating - kitchen off
   trigger:
   - platform: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
-      - (states(''sensor.temperature_2'') | float) < 2 }}'
+      - (states(''sensor.temperature_2'') | float) < 1 }}'
   condition: []
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
@@ -302,7 +303,7 @@
     domain: deconz
     platform: device
     subtype: turn_on
-    type: remote_button_short_press
+    ype: remote_button_short_press
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
