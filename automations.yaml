@@ -192,7 +192,7 @@
   trigger:
   - platform: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
-      - (states(''sensor.temperature_2'') | float) > 1.5}}'
+      - (states(''sensor.temperature_2'') | float) > 1.0}}'
   condition: []
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
@@ -204,7 +204,7 @@
   trigger:
   - platform: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
-      - (states(''sensor.temperature_2'') | float) < 1 }}'
+      - (states(''sensor.temperature_2'') | float) < 0.5 }}'
   condition: []
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
@@ -296,30 +296,6 @@
   - data:
       entity_id: switch.08102185a4cf12a8361f
     service: switch.toggle
-- id: '1570214294763'
-  alias: remote entrance bulb
-  trigger:
-  - device_id: 938fddfde7134636aa05d12b4f4df16b
-    domain: deconz
-    platform: device
-    subtype: turn_on
-    ype: remote_button_short_press
-  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-    domain: deconz
-    platform: device
-    subtype: dim_down
-    type: remote_button_short_press
-  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-    domain: deconz
-    platform: device
-    subtype: dim_down
-    type: remote_button_short_press
-  condition: []
-  action:
-  - device_id: ef2cce166005498b9b4a731b6bd01c3b
-    domain: light
-    entity_id: light.osram_bulb_2
-    type: toggle
 - id: '1570214365100'
   alias: remote bathroom bulb
   trigger:
@@ -523,3 +499,27 @@
   - data:
       message: Bathroom radiator turned off
     service: notify.html5
+- id: '1570606700515'
+  alias: remote - entrance bulb
+  trigger:
+  - device_id: 938fddfde7134636aa05d12b4f4df16b
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  condition: []
+  action:
+  - device_id: ef2cce166005498b9b4a731b6bd01c3b
+    domain: light
+    entity_id: light.osram_bulb_2
+    type: toggle

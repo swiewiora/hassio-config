@@ -78,7 +78,7 @@ climate:
     min_temp: 15
     max_temp: 25
     hot_tolerance: 1
-    cold_tolerance: 1
+    cold_tolerance: 0.5
   - platform: generic_thermostat
     name: Bathroom Heating
     heater: switch.osram_plug_4
@@ -87,7 +87,7 @@ climate:
     min_temp: 15
     max_temp: 25
     hot_tolerance: 1
-    cold_tolerance: 1
+    cold_tolerance: 0.5
 
 input_number:
   target_temp_room_high:
