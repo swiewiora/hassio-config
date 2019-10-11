@@ -54,14 +54,14 @@
     state: 'off'
   action:
   - data:
-      entity_id: group.all_lights
+      entity_id: group.bulbs
     entity_id: group.all_lights
     service: light.turn_off
   - data:
       message: Home Assistant started after unexpected shutdown.
       title: Home Assistant started
     service: notify.telegram
-  - delay: 00:00:10
+  - delay: 00:00:30
 - id: heating_morning_on_wd
   alias: heating - weekday morning
   trigger:
