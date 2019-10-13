@@ -24,7 +24,7 @@ tuya:
   platform: smart_life
 
 google_assistant:
-  project_id: ***REMOVED***
+  project_id: !secret google_assistant_id
   entity_config:
     group.all_automations:
       expose: false
@@ -65,6 +65,9 @@ logger:
 history:
 recorder:
   db_url: sqlite:////tmp/home-assistant_v2.db
+  exclude:
+    entities:
+    - sensor.time
 
 frontend:
   themes: !include themes.yaml
