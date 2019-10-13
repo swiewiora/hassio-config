@@ -1,6 +1,7 @@
 *.log
 .storage/
 .ios.conf
+config.code-workspace
 
 # Created by https://www.gitignore.io/api/homeassistant
 ### HomeAssistant ###
