@@ -394,25 +394,6 @@
     platform: device
     subtype: left
     type: remote_button_short_press
-- id: '1570225511440'
-  alias: remote mirror lamp switch
-  trigger:
-  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-    domain: deconz
-    platform: device
-    subtype: left
-    type: remote_button_long_press
-  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-    domain: deconz
-    platform: device
-    subtype: left
-    type: remote_button_long_press
-  condition: []
-  action:
-  - device_id: 3ffe83ae8d374484ab3f3f4bf93e7506
-    domain: switch
-    entity_id: switch.osram_plug_3
-    type: toggle
 - id: '1570405317272'
   alias: heating - bathroom switch turned off
   trigger:
@@ -530,3 +511,33 @@
     domain: light
     entity_id: light.osram_bulb_2
     type: toggle
+- id: '1571077635173'
+  alias: remote dim living room bulb
+  description: ''
+  trigger:
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_long_press
+  condition: []
+  action:
+  - service: script.light_bright
+- id: '1571077733752'
+  alias: remote dim living room bulb stop
+  description: ''
+  trigger:
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_long_release
+  condition: []
+  action:
+  - alias: ''
+    data:
+      entity_id: script.light_bright_pause
+    service: script.turn_off
+  - data:
+      entity_id: script.light_bright
+    service: script.turn_off
