@@ -1,0 +1,7 @@
+maintenance_mode:
+  name: Maintenance mode
+  icon: mdi:restart
+heating_timer:
+  name: Use heating timer
+  icon: mdi:toggle-switch
+motion_triggered_bathroom_bulb:

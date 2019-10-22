@@ -1,0 +1,257 @@
+- id: '1570130746943'
+  alias: remote bedroom bulb
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_up
+    type: remote_button_short_press
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: dim_up
+    type: remote_button_short_press
+  condition: []
+  action:
+  - device_id: 25225d38879b423397fe3c8d11e5a218
+    domain: light
+    entity_id: light.ikea_bulb_2
+    type: toggle
+- id: '1570212713167'
+  alias: remote living room bulb
+  trigger:
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_short_press
+  condition: []
+  action:
+  - device_id: e3fba55eeae242c18065b69127fcf46f
+    domain: light
+    entity_id: light.ikea_bulb_1
+    type: toggle
+- id: '1570213166105'
+  alias: remote standing lamp switch
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_up
+    type: remote_button_long_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: dim_up
+    type: remote_button_long_press
+  condition: []
+  action:
+  - alias: ''
+    data:
+      entity_id: switch.08102185a4cf12a83367
+    service: switch.toggle
+- id: '1570214150331'
+  alias: remote desk lamp switch
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_long_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_long_press
+  condition: []
+  action:
+  - data:
+      entity_id: switch.08102185a4cf12a8361f
+    service: switch.toggle
+- id: '1570214365100'
+  alias: remote bathroom bulb
+  trigger:
+  - device_id: 938fddfde7134636aa05d12b4f4df16b
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_short_press
+  condition: []
+  action:
+  - device_id: b2fc53cb967544afaa64c50b48b95840
+    domain: light
+    entity_id: light.osram_bulb_1
+    type: toggle
+- id: '1570215042351'
+  alias: remote ceiling light switch
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_long_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_long_press
+  condition: []
+  action:
+  - device_id: b79bdaab2df4423e82938a62556d1db6
+    domain: light
+    entity_id: light.cable_onoff_2
+    type: toggle
+- id: '1570215199936'
+  alias: remote hood switch
+  trigger:
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  condition: []
+  action:
+  - device_id: d964f0b9e6c64edd91d313b1d18f7434
+    domain: light
+    entity_id: light.cable_onoff
+    type: toggle
+- id: '1570215295449'
+  alias: remote sink lamp switch
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_long_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_long_press
+  condition: []
+  action:
+  - device_id: a5eff051123d4f848250fd350f95d86b
+    domain: switch
+    entity_id: switch.osram_plug_1
+    type: toggle
+- id: '1570219780878'
+  alias: remote oven switch
+  trigger:
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_long_press
+  condition: []
+  action:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_short_press
+- id: '1570405317272'
+  alias: heating - bathroom switch turned off
+  trigger:
+  - entity_id: switch.osram_plug_4
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+    service: climate.set_temperature
+- id: '1570484180533'
+  alias: remote cooling
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  condition: []
+  action:
+  - alias: ''
+    data:
+      entity_id: switch.081021853c71bf3edb01
+    service: switch.toggle
+- id: '1570606700515'
+  alias: remote - entrance bulb
+  trigger:
+  - device_id: 938fddfde7134636aa05d12b4f4df16b
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  condition: []
+  action:
+  - device_id: ef2cce166005498b9b4a731b6bd01c3b
+    domain: light
+    entity_id: light.osram_bulb_2
+    type: toggle
+- id: '1571077635173'
+  alias: remote dim living room bulb
+  description: ''
+  trigger:
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_long_press
+  condition: []
+  action:
+  - service: script.light_bright
+- id: '1571077733752'
+  alias: remote dim living room bulb stop
+  description: ''
+  trigger:
+  - device_id: 977ed79430444f9dab60df1c7035c4fd
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_long_release
+  condition: []
+  action:
+  - alias: ''
+    data:
+      entity_id: script.light_bright_pause
+    service: script.turn_off
+  - data:
+      entity_id: script.light_bright
+    service: script.turn_off

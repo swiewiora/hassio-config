@@ -1,0 +1,184 @@
+- id: heating_morning_on_wd
+  alias: heating - weekday morning
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == ( state_attr(''input_datetime.weekday_start'',
+      ''timestamp'') | int | timestamp_custom(''%H:%M'', False) ) }}'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+  - data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
+    service: climate.set_temperature
+  - data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
+    service: climate.set_temperature
+- id: heating_evening_off_wd
+  alias: heating - weekday night
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == ( state_attr(''input_datetime.weekday_end'',
+      ''timestamp'') | int | timestamp_custom(''%H:%M'', False) ) }}'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+  - data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_low'') }}'
+    service: climate.set_temperature
+- id: heating_morning_on_we
+  alias: heating - weekend morning
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == ( state_attr(''input_datetime.weekend_start'',
+      ''timestamp'') | int | timestamp_custom(''%H:%M'', False) ) }}'
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+  - data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
+    service: climate.set_temperature
+  - data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
+    service: climate.set_temperature
+- id: heating_evening_off_we
+  alias: heating - weekend night
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == ( state_attr(''input_datetime.weekend_end'',
+      ''timestamp'') | int | timestamp_custom(''%H:%M'', False) ) }}'
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  - condition: state
+    entity_id: input_boolean.heating_timer
+    state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: home
+  action:
+  - data_template:
+      entity_id: climate.room_heating
+      temperature: '{{ states(''input_number.target_temp_room_low'') }}'
+    service: climate.set_temperature
+  - data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+    service: climate.set_temperature
+- id: heating_on_when_home
+  alias: heating - turn heating on on arrival
+  trigger:
+  - entity_id: person.sebastian
+    from: not_home
+    platform: state
+    to: home
+  action:
+  - data:
+      preset_mode: none
+    service: climate.set_preset_mode
+  - data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+    service: climate.set_temperature
+- id: heating_off_when_away
+  alias: heating - turn off when we leave home
+  trigger:
+  - entity_id: person.sebastian
+    for: 00:10:00
+    from: home
+    platform: state
+    to: not_home
+  action:
+  - data:
+      preset_mode: away
+    service: climate.set_preset_mode
+- id: '1570365018863'
+  alias: heating - kitchen on
+  trigger:
+  - platform: template
+    value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
+      - (states(''sensor.temperature_2'') | float) > 1.0}}'
+  condition: []
+  action:
+  - device_id: b95dc98ae71941c68e4f32961e25ae2a
+    domain: switch
+    entity_id: switch.ikea_plug_2
+    type: turn_on
+- id: '1570365069845'
+  alias: heating - kitchen off
+  trigger:
+  - platform: template
+    value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
+      - (states(''sensor.temperature_2'') | float) < 0.5 }}'
+  condition: []
+  action:
+  - device_id: b95dc98ae71941c68e4f32961e25ae2a
+    domain: switch
+    entity_id: switch.ikea_plug_2
+    type: turn_off
+- id: '1570405317272'
+  alias: heating - bathroom switch turned off
+  trigger:
+  - entity_id: switch.osram_plug_4
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+    service: climate.set_temperature
+- id: '1570484180533'
+  alias: remote cooling
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  condition: []
+  action:
+  - alias: ''
+    data:
+      entity_id: switch.081021853c71bf3edb01
+    service: switch.toggle

@@ -1,0 +1,31 @@
+- alias: presence - turn on bathroom light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_30
+    from: 'off'
+    to: 'on'
+    for: 00:00:05
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
+  action:
+  - service: light.turn_on
+    entity_id: light.osram_bulb_1
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.motion_triggered_bathroom_bulb
+- alias: presence - turn off bathroom light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_30
+    from: 'on'
+    to: 'off'
+    for: 00:03:00
+  condition:
+  - condition: state
+    entity_id: input_boolean.motion_triggered_bathroom_bulb
+    state: 'on'
+  action:
+  - service: light.turn_off
+    entity_id: light.osram_bulb_1
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.motion_triggered_bathroom_bulb
