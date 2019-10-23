@@ -71,18 +71,7 @@
   action:
   - data:
       message: Ceiling heating panel turned on
-    service: notify.html5
-- id: '1570485651434'
-  alias: heating - notify ceiling switched off
-  trigger:
-  - entity_id: switch.ikea_plug
-    platform: state
-    to: 'off'
-  condition: []
-  action:
-  - data:
-      message: Ceiling heating panel switched off
-    service: notify.html5
+    service: notify.low_priority
 - id: '1570485730562'
   alias: heating - notify wall panel switched on
   trigger:
@@ -93,18 +82,8 @@
   action:
   - data:
       message: Heating wall panel switched on
-    service: notify.html5
-- id: '1570486021472'
-  alias: heating - notify wall panel switched off
-  trigger:
-  - entity_id: switch.ikea_plug_2
-    platform: state
-    to: 'off'
-  condition: []
-  action:
-  - data:
-      message: Wall heating panel turned off
-    service: notify.html5
+    service: notify.low_priority
+
 - id: '1570486105628'
   alias: heating - notify radiator turned on
   trigger:
@@ -115,15 +94,27 @@
   action:
   - data:
       message: Bathroom radiator turned on
-    service: notify.html5
-- id: '1570486156080'
-  alias: heating - notify radiator turned off
+    service: notify.low_priority
+- id: window_open_reminder
+  alias: window open - remind when away
   trigger:
-  - entity_id: switch.osram_plug_4
+  - entity_id: person.sebastian
+    from: home
     platform: state
-    to: 'off'
-  condition: []
+    to: not_home
+  condition:
+  - condition: state
+    entity_id: binary_sensor.openclose_31
+    state: 'on'
+  - condition: template
+    value_template: 
+      '{{ (state_attr(''weather.home'', ''temperature'') | float) < 20 }}'
   action:
-  - data:
-      message: Bathroom radiator turned off
-    service: notify.html5
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+  - delay: 00:00:05
+  - service: notify.all
+    data:
+      message: Window in bathroom is open!

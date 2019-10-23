@@ -28,6 +28,7 @@ sensor:
   - platform: time_date
     display_options:
       - 'time'
+      - 'time_date'
 
 ios:
 
@@ -44,19 +45,25 @@ google_assistant:
       expose: false
 
 notify:
-  - name: html5
+  - name: web
     platform: html5
     vapid_pub_key: !secret vapid_pub_key
     vapid_prv_key: !secret vapid_prv_key
     vapid_email: !secret vapid_email
+  - name: t6m
+    platform: telegram
+    chat_id: !secret telegram_chat_id
   - name: all
     platform: group
     services:
-      - service: html5
-      - service: ios_i7sw
-  - name: telegram
-    platform: telegram
-    chat_id: !secret telegram_chat_id
+    - service: web
+    - service: t6m
+    - service: ios_i7sw
+  - name: low_priority
+    platform: group
+    services:
+    - service: web
+    - service: ios_i7sw
 
 telegram_bot:
   - platform: broadcast

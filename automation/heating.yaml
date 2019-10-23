@@ -115,6 +115,7 @@
   - data:
       preset_mode: none
     service: climate.set_preset_mode
+  - delay: 00:00:05
   - data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
@@ -123,11 +124,15 @@
   alias: heating - turn off when we leave home
   trigger:
   - entity_id: person.sebastian
-    for: 00:10:00
     from: home
     platform: state
     to: not_home
   action:
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+  - delay: 00:00:05
   - data:
       preset_mode: away
     service: climate.set_preset_mode
@@ -155,19 +160,6 @@
     domain: switch
     entity_id: switch.ikea_plug_2
     type: turn_off
-- id: '1570405317272'
-  alias: heating - bathroom switch turned off
-  trigger:
-  - entity_id: switch.osram_plug_4
-    from: 'on'
-    platform: state
-    to: 'off'
-  condition: []
-  action:
-  - data_template:
-      entity_id: climate.bathroom_heating
-      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
-    service: climate.set_temperature
 - id: '1570484180533'
   alias: remote cooling
   trigger:
