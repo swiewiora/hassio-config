@@ -112,9 +112,10 @@
     platform: state
     to: home
   action:
-  - data:
+  - service: climate.set_preset_mode
+    data:
       preset_mode: none
-    service: climate.set_preset_mode
+      entity_id: all
   - delay: 00:00:05
   - data_template:
       entity_id: climate.bathroom_heating
@@ -133,9 +134,10 @@
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
   - delay: 00:00:05
-  - data:
+  - service: climate.set_preset_mode
+    data:
       preset_mode: away
-    service: climate.set_preset_mode
+      entity_id: all
 - id: '1570365018863'
   alias: heating - kitchen on
   trigger:
@@ -160,17 +162,3 @@
     domain: switch
     entity_id: switch.ikea_plug_2
     type: turn_off
-- id: '1570484180533'
-  alias: remote cooling
-  trigger:
-  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-    domain: deconz
-    platform: device
-    subtype: turn_on
-    type: remote_button_short_press
-  condition: []
-  action:
-  - alias: ''
-    data:
-      entity_id: switch.081021853c71bf3edb01
-    service: switch.toggle

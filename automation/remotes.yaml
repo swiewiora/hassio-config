@@ -169,24 +169,8 @@
     type: remote_button_long_press
   condition: []
   action:
-  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-    domain: deconz
-    platform: device
-    subtype: left
-    type: remote_button_short_press
-- id: '1570405317272'
-  alias: heating - bathroom switch turned off
-  trigger:
-  - entity_id: switch.osram_plug_4
-    from: 'on'
-    platform: state
-    to: 'off'
-  condition: []
-  action:
-  - data_template:
-      entity_id: climate.bathroom_heating
-      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
-    service: climate.set_temperature
+  - service: switch.toggle
+    entity_id: switch.osram_plug_2
 - id: '1570484180533'
   alias: remote cooling
   trigger:
@@ -197,10 +181,9 @@
     type: remote_button_short_press
   condition: []
   action:
-  - alias: ''
+  - service: switch.toggle
     data:
       entity_id: switch.081021853c71bf3edb01
-    service: switch.toggle
 - id: '1570606700515'
   alias: remote - entrance bulb
   trigger:
@@ -255,3 +238,16 @@
   - data:
       entity_id: script.light_bright
     service: script.turn_off
+- id: '1570484180533'
+  alias: remote cooling
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  condition: []
+  action:
+  - service: switch.toggle
+    data:
+      entity_id: switch.081021853c71bf3edb01
