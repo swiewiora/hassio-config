@@ -26,5 +26,29 @@
   action:
   - service: light.turn_off
     entity_id: light.osram_bulb_1
+- alias: presence - reset motion_triggered_bathroom_bulb
+  trigger:
+  - platform: state
+    entity_id: light.osram_bulb_1
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.motion_triggered_bathroom_bulb
+    state: 'on'
+  action:
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_bathroom_bulb
+- alias: presence - turn on desk lamp
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_25
+    from: 'off'
+    to: 'on'
+    for: 00:03:00
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.08102185a4cf12a8361f
