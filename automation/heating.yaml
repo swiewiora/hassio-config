@@ -162,3 +162,19 @@
     domain: switch
     entity_id: switch.ikea_plug_2
     type: turn_off
+- id: 'heating_bathroom_off'
+  alias: heating - turn off bathroom heating
+  trigger:
+  - platform: state
+    entity_id: switch.osram_plug_3
+    from: 'on'
+    to: 'off'
+    for: 00:05:00
+  condition:
+  - condition: template
+    value_template: '{{ (state_attr(''climate.bathroom_heating'', ''temperature'') | float)
+      >= (states(''input_number.target_temp_bathroom_high'') | float) }}'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.osram_plug_4
