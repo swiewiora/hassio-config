@@ -178,3 +178,7 @@
   - service: switch.turn_off
     data:
       entity_id: switch.osram_plug_4
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
