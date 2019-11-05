@@ -23,6 +23,7 @@ recorder:
   exclude:
     entities:
     - sensor.time
+    - sensor.time_date
 
 sensor:
   - platform: time_date
