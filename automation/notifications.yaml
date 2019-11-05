@@ -40,21 +40,21 @@
       message: Water sensor triggered!
     service: telegram_bot.send_message
 - id: 'entrance_open'
-  alias: Entrance door opened
+  alias: Entrance door opened - turn on light
   trigger:
   - entity_id: binary_sensor.openclose_11
     from: 'off'
     platform: state
     to: 'on'
   condition:
-  - condition: state
-    entity_id: person.sebastian
-    state: not_home
+  - condition: template
+    value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
   action:
-  - data:
-      message: Entrance door opened!
-      title: Burglary alarm
-    service: telegram_bot.send_message
+  - service: light.turn_on
+    entity_id: light.osram_bulb_2
+  - delay: 00:05:00
+  - service: light.turn_off
+    entity_id: light.osram_bulb_2
 - id: 'entrance door open'
   alias: Entrance door is open
   trigger:
@@ -146,3 +146,25 @@
   - service: notify.all
     data:
       message: Window in bathroom is open!
+- id: 'sensor_triggered_away'
+  alias: Sensor triggered while away
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.openclose_10
+    - binary_sensor.openclose_11
+    - binary_sensor.openclose_21
+    - binary_sensor.openclose_28
+    - binary_sensor.presence_25
+    - binary_sensor.presence_30
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.sebastian
+    state: not_home
+  action:
+  - service: telegram_bot.send_message
+    data_template:
+      title: Burglary alarm
+      message: Sensor triggered while you're away
