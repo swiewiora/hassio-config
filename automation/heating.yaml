@@ -117,10 +117,14 @@
       preset_mode: none
       entity_id: all
   - delay: 00:00:05
-  - data_template:
+  - service: climate.set_temperature
+    data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
-    service: climate.set_temperature
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.hroom_heating
+      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
 - id: heating_off_when_away
   alias: heating - turn off when we leave home
   trigger:
