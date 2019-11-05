@@ -45,10 +45,13 @@
     entity_id: binary_sensor.presence_25
     from: 'off'
     to: 'on'
-    for: 00:03:00
+    for: 00:05:00
   condition:
   - condition: template
     value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
+  - condition: state
+    entity_id: device_tracker.n550jv
+    state: 'home'
   action:
   - service: switch.turn_on
     entity_id: switch.08102185a4cf12a8361f
