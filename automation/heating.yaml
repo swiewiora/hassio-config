@@ -123,14 +123,14 @@
       temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
   - service: climate.set_temperature
     data_template:
-      entity_id: climate.hroom_heating
+      entity_id: climate.room_heating
       temperature: '{{ states(''input_number.target_temp_room_high'') }}'
 - id: heating_off_when_away
   alias: heating - turn off when we leave home
   trigger:
-  - entity_id: person.sebastian
+  - platform: state
+    entity_id: person.sebastian
     from: home
-    platform: state
     to: not_home
   action:
   - service: climate.set_temperature
