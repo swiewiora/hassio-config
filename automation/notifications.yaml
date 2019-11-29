@@ -159,11 +159,11 @@
     - binary_sensor.presence_30
     from: 'off'
     to: 'on'
-  condition:
+  action:
+  - delay: 00:00:15
   - condition: state
     entity_id: person.sebastian
     state: not_home
-  action:
   - service: telegram_bot.send_message
     data_template:
       title: Burglary alarm
