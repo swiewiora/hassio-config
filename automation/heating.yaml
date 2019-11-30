@@ -19,10 +19,10 @@
     entity_id: person.sebastian
     state: home
   action:
-  - data_template:
-      entity_id: climate.room_heating
-      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
-    service: climate.set_temperature
+  # - data_template:
+  #     entity_id: climate.room_heating
+  #     temperature: '{{ states(''input_number.target_temp_room_high'') }}'
+  #   service: climate.set_temperature
   - data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
