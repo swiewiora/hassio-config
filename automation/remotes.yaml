@@ -210,34 +210,26 @@
     type: toggle
 - id: '1571077635173'
   alias: remote dim living room bulb
-  description: ''
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
     platform: device
     subtype: turn_off
     type: remote_button_long_press
-  condition: []
   action:
-  - service: script.light_bright
+  - service: script.light_start_dimmer
 - id: '1571077733752'
   alias: remote dim living room bulb stop
-  description: ''
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
     platform: device
     subtype: turn_off
     type: remote_button_long_release
-  condition: []
   action:
-  - alias: ''
+  - service: script.turn_on
     data:
-      entity_id: script.light_bright_pause
-    service: script.turn_off
-  - data:
-      entity_id: script.light_bright
-    service: script.turn_off
+      entity_id: script.light_stop_dimmer
 - id: '1570484180533'
   alias: remote cooling
   trigger:
