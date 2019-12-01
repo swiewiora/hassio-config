@@ -1,17 +1,19 @@
 light_start_dimmer:
+  fields:
+    light:
+      description: 'Light entity id'
+      example: 'light.ikea_bulb_1'
   sequence:
-    - service_template: >
-        {% if state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int < states('input_number.light_maximum')|int %}
-          script.turn_on
-        {% endif %}
-      data:
-        entity_id: script.light_brighten
-    - service_template: >
-        {% if state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int >= states('input_number.light_maximum')|int %}
-          script.turn_on
-        {% endif %}
-      data:
-        entity_id: script.light_darken
+    - service: script.turn_on
+      data_template:
+        entity_id: >-
+          {% if state_attr(light, 'brightness')|default(1)|int < states('input_number.light_maximum')|int %}
+            script.light_brighten
+          {% else %}
+            script.light_darken
+          {% endif %}
+        variables:
+          light: "{{ light }}"
 
 light_stop_dimmer:
   sequence:
@@ -24,12 +26,16 @@ light_stop_dimmer:
           - script.light_darken_pause
 
 light_brighten:
+  fields:
+    light:
+      description: 'Light entity id'
+      example: 'light.ikea_bulb_1'
   sequence:
     - service: light.turn_on
       data_template:
-        entity_id: light.ikea_bulb_1
+        entity_id: "{{ light }}"
         brightness: >-
-          {% set current = state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int %}
+          {% set current = state_attr(light, 'brightness')|default(1)|int %}
           {% set step = states('input_number.light_step')|int %}
           {% set next = current + step %}
           {% if next > states('input_number.light_maximum')|int %}
@@ -37,61 +43,84 @@ light_brighten:
           {% endif %}
           {{ next }}
     - service_template: >
-        {% if state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int < states('input_number.light_maximum')|int %}
+        {% if state_attr(light, 'brightness')|default(1)|int < states('input_number.light_maximum')|int %}
           script.turn_on
         {% else %}
           script.turn_off
         {% endif %}
-      data:
+      data_template:
         entity_id: script.light_brighten_pause
+        variables:
+          light: "{{ light }}"
     - service_template: >
-        {% if state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int >= states('input_number.light_maximum')|int %}
+        {% if state_attr(light, 'brightness')|default(1)|int >= states('input_number.light_maximum')|int %}
           script.turn_on
         {% endif %}
-      data:
+      data_template:
         entity_id: script.light_darken_pause
+        variables:
+          light: "{{ light }}"
 
 light_brighten_pause:
+  fields:
+    light:
+      description: 'Light entity id'
+      example: 'light.ikea_bulb_1'
   sequence:
     - delay:
-        milliseconds: 1
+        milliseconds: 1000
     - service: script.turn_on
-      data:
+      data_template:
         entity_id: script.light_brighten
+        variables:
+          light: "{{ light }}"
 
 light_darken:
+  fields:
+    light:
+      description: 'Light entity id'
+      example: 'light.ikea_bulb_1'
   sequence:
     - service: light.turn_on
       data_template:
-        entity_id: light.ikea_bulb_1
+        entity_id: "{{ light }}"
         brightness: >-
-          {% set current = state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int %}
+          {% set current = state_attr(light, 'brightness')|default(1)|int %}
           {% set step = states('input_number.light_step')|int %}
           {% set next = current - step %}
           {% if next < states('input_number.light_minimum')|int %}
             {% set next = states('input_number.light_minimum')|int %}
           {% endif %}
           {{ next }}
-
     - service_template: >
-        {% if state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int > states('input_number.light_minimum')|int %}
+        {% if state_attr(light, 'brightness')|default(1)|int > states('input_number.light_minimum')|int %}
           script.turn_on
         {% else %}
           script.turn_off
         {% endif %}
-      data:
+      data_template:
         entity_id: script.light_darken_pause
+        variables:
+          light: "{{ light }}"
     - service_template: >
-        {% if state_attr('light.ikea_bulb_1', 'brightness')|default(1)|int <= states('input_number.light_minimum')|int %}
+        {% if state_attr(light, 'brightness')|default(1)|int <= states('input_number.light_minimum')|int %}
           script.turn_on
         {% endif %}
-      data:
+      data_template:
         entity_id: script.light_brighten_pause
+        variables:
+          light: "{{ light }}"
 
 light_darken_pause:
+  fields:
+    light:
+      description: 'Light entity id'
+      example: 'light.ikea_bulb_1'
   sequence:
     - delay:
-        milliseconds: 1
+        milliseconds: 1000
     - service: script.turn_on
-      data:
+      data_template:
         entity_id: script.light_darken
+        variables:
+          light: "{{ light }}"

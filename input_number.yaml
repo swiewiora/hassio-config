@@ -28,7 +28,7 @@ target_temp_bathroom_low:
   icon: mdi:arrow-bottom-right-thick
 light_step:
   name: 'Light dimmer step'
-  initial: 20
+  initial: 64
   min: 1
   max: 64
   step: 1
