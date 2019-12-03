@@ -19,10 +19,10 @@
     entity_id: person.sebastian
     state: home
   action:
-  # - data_template:
-  #     entity_id: climate.room_heating
-  #     temperature: '{{ states(''input_number.target_temp_room_high'') }}'
-  #   service: climate.set_temperature
+  - service: switch.turn_on
+    entity_id: 
+    - switch.ikea_plug
+    - switch.ikea_plug_2
   - data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
@@ -145,10 +145,12 @@
 - id: '1570365018863'
   alias: heating - kitchen on
   trigger:
-  - platform: template
+  - platform: state
+    entity_id: sensor.temperature_2
+  condition: 
+  - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
       - (states(''sensor.temperature_2'') | float) > 1.0}}'
-  condition: []
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
     domain: switch
@@ -157,10 +159,12 @@
 - id: '1570365069845'
   alias: heating - kitchen off
   trigger:
-  - platform: template
+  - platform: state
+    entity_id: sensor.temperature_2
+  condition:
+  - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
       - (states(''sensor.temperature_2'') | float) < 0.5 }}'
-  condition: []
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
     domain: switch
@@ -173,7 +177,7 @@
     entity_id: switch.osram_plug_3
     from: 'on'
     to: 'off'
-    for: 00:05:00
+    for: 00:03:00
   condition:
   - condition: template
     value_template: '{{ (state_attr(''climate.bathroom_heating'', ''temperature'') | float)
@@ -186,3 +190,26 @@
     data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
+- id: 'heating_bathroom_on'
+  alias: heating - turn on bathroom heating
+  trigger:
+  - platform: state
+    entity_id: switch.osram_plug_3
+    from: 'off'
+    to: 'on'
+    for: 00:00:15
+  condition:
+  - condition: template
+    value_template: '{{ (state_attr(''climate.bathroom_heating'', ''temperature'') | float)
+      <= (states(''input_number.target_temp_bathroom_low'') | float) }}'
+  - condition: state
+    entity_id: binary_sensor.presence_30
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.osram_plug_4
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.bathroom_heating
+      temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
