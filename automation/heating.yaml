@@ -147,6 +147,10 @@
   trigger:
   - platform: state
     entity_id: sensor.temperature_2
+  - platform: state
+    entity_id: climate.room_heating
+  - platform: template
+    value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float) }}'
   condition: 
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
@@ -161,6 +165,10 @@
   trigger:
   - platform: state
     entity_id: sensor.temperature_2
+  - platform: state
+    entity_id: climate.room_heating
+  - platform: template
+    value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float) }}'
   condition:
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
