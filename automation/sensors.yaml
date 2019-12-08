@@ -23,6 +23,9 @@
   - condition: state
     entity_id: input_boolean.motion_triggered_bathroom_bulb
     state: 'on'
+  - condition: state
+    entity_id: person.sebastian
+    state: 'home'
   action:
   - service: light.turn_off
     entity_id: light.osram_bulb_1
@@ -45,7 +48,7 @@
     entity_id: binary_sensor.presence_25
     from: 'off'
     to: 'on'
-    for: 00:05:00
+    for: 00:10:00
   condition:
   - condition: template
     value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
@@ -54,4 +57,17 @@
     state: 'home'
   action:
   - service: switch.turn_on
+    entity_id: switch.08102185a4cf12a8361f
+- alias: presence - turn off desk lamp
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_25
+    from: 'on'
+    to: 'off'
+    for: 00:10:00
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
+  action:
+  - service: switch.turn_off
     entity_id: switch.08102185a4cf12a8361f
