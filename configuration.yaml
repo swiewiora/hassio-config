@@ -19,7 +19,7 @@ logger:
   default: warning
 history:
 recorder:
-  db_url: sqlite:////tmp/home-assistant_v2.db
+  db_url: 'sqlite:///:memory:'
   exclude:
     entities:
     - sensor.time
