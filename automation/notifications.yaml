@@ -6,7 +6,6 @@
     from: 'off'
     platform: state
     to: 'on'
-  condition: []
   action:
   - data:
       message: Freezer is open
@@ -34,27 +33,10 @@
     from: 'off'
     platform: state
     to: 'on'
-  condition: []
   action:
   - data:
       message: Water sensor triggered!
     service: telegram_bot.send_message
-- id: 'entrance_open'
-  alias: Entrance door opened - turn on light
-  trigger:
-  - entity_id: binary_sensor.openclose_11
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition:
-  - condition: template
-    value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
-  action:
-  - service: light.turn_on
-    entity_id: light.osram_bulb_2
-  - delay: 00:05:00
-  - service: light.turn_off
-    entity_id: light.osram_bulb_2
 - id: 'entrance door open'
   alias: Entrance door is open
   trigger:
@@ -91,7 +73,6 @@
   - entity_id: switch.ikea_plug
     platform: state
     to: 'on'
-  condition: []
   action:
   - data:
       message: Ceiling heating panel turned on
@@ -102,7 +83,6 @@
   - entity_id: switch.ikea_plug_2
     platform: state
     to: 'on'
-  condition: []
   action:
   - data:
       message: Heating wall panel switched on
@@ -113,7 +93,6 @@
   - entity_id: switch.osram_plug_4
     platform: state
     to: 'on'
-  condition: []
   action:
   - data:
       message: Bathroom radiator turned on
@@ -160,7 +139,7 @@
     from: 'off'
     to: 'on'
   action:
-  - delay: 00:00:15
+  - delay: 00:00:20
   - condition: state
     entity_id: person.sebastian
     state: not_home
