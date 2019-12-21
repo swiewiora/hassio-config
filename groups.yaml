@@ -5,3 +5,12 @@ bulbs:
     - light.ikea_bulb_2
     - light.osram_bulb_1
     - light.osram_bulb_2
+
+my_all_lights:
+  name: All lights
+  entities:
+  - group.bulbs
+  - light.cable_onoff_2
+  - light.cable_onoff
+  - switch.osram_plug_1
+  - switch.osram_plug_3
