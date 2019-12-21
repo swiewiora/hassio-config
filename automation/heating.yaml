@@ -221,3 +221,17 @@
     data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
+- id: 'heating-minimum_temperature'
+  alias: heating - minimum temperature
+  trigger:
+  - platform: state
+    entity_id: sensor.temperature_16
+  condition: 
+  - condition: numeric_state
+    entity_id: sensor.temperature_16
+    below: 19
+  action:
+  - service: switch.turn_on
+    entity_id: 
+    - switch.ikea_plug
+    - switch.ikea_plug_2
