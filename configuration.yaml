@@ -88,7 +88,7 @@ climate:
     away_temp: 15
     min_temp: 15
     max_temp: 25
-    hot_tolerance: 1
+    hot_tolerance: 0.5
     cold_tolerance: 0.5
   - platform: generic_thermostat
     name: Bathroom Heating
@@ -97,7 +97,7 @@ climate:
     away_temp: 15
     min_temp: 15
     max_temp: 25
-    hot_tolerance: 1
+    hot_tolerance: 0.5
     cold_tolerance: 0.5
 
 hacs:
