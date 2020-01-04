@@ -60,11 +60,13 @@ notify:
     - service: web
     - service: t6m
     - service: ios_i7sw
+    - service: mi_9_se
   - name: low_priority
     platform: group
     services:
     - service: web
     - service: ios_i7sw
+    - service: mi_9_se
 
 telegram_bot:
   - platform: broadcast
