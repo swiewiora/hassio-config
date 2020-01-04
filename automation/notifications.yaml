@@ -138,11 +138,23 @@
     - binary_sensor.presence_30
     from: 'off'
     to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: person.sebastian
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.maintenance_mode
+      state: 'off'
   action:
   - delay: 00:00:30
   - condition: state
     entity_id: person.sebastian
     state: not_home
+  - condition: state
+    entity_id: input_boolean.maintenance_mode
+    state: 'off'
   - service: telegram_bot.send_message
     data_template:
       title: Burglary alarm
@@ -159,13 +171,19 @@
     from: 'off'
     to: 'on'
   condition:
-  - condition: state
-    entity_id: group.my_all_lights
-    state: 'on'
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: person.sebastian
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.maintenance_mode
+      state: 'off'
+  action:
+  - delay: 00:00:30
   - condition: state
     entity_id: person.sebastian
     state: not_home
-  action:
   - service: telegram_bot.send_message
     data_template:
       message: Lights are on
