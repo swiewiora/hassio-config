@@ -179,6 +179,9 @@
     - condition: state
       entity_id: input_boolean.maintenance_mode
       state: 'off'
+    - condition: state
+      entity_id: group.my_all_lights
+      state: 'on'
   action:
   - delay: 00:00:30
   - condition: state
