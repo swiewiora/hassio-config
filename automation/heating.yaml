@@ -7,24 +7,26 @@
   condition:
     condition: and
     conditions:
-    - condition: time
-      weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
-    - condition: state
-      entity_id: input_boolean.heating_timer
-      state: 'on'
-    condition: or
-    conditions:
-    - condition: state
-      entity_id: person.sebastian
-      state: home
-    - condition: state
-      entity_id: input_boolean.maintenance_mode
-      state: 'on'
+    - condition: and
+      conditions:
+      - condition: time
+        weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+      - condition: state
+        entity_id: input_boolean.heating_timer
+        state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: person.sebastian
+        state: home
+      - condition: state
+        entity_id: input_boolean.maintenance_mode
+        state: 'on'
   action:
   - service: switch.turn_on
     entity_id: 
@@ -43,24 +45,26 @@
   condition:
     condition: and
     conditions:
-    - condition: time
-      weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
-    - condition: state
-      entity_id: input_boolean.heating_timer
-      state: 'on'
-    condition: or
-    conditions:
-    - condition: state
-      entity_id: person.sebastian
-      state: home
-    - condition: state
-      entity_id: input_boolean.maintenance_mode
-      state: 'on'
+    - condition: and
+      conditions:
+      - condition: time
+        weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+      - condition: state
+        entity_id: input_boolean.heating_timer
+        state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: person.sebastian
+        state: home
+      - condition: state
+        entity_id: input_boolean.maintenance_mode
+        state: 'on'
   action:
   - data_template:
       entity_id: climate.room_heating
@@ -75,21 +79,23 @@
   condition:
     condition: and
     conditions:
-    - condition: time
-      weekday:
-      - sat
-      - sun
-    - condition: state
-      entity_id: input_boolean.heating_timer
-      state: 'on'
-    condition: or
-    conditions:
-    - condition: state
-      entity_id: person.sebastian
-      state: home
-    - condition: state
-      entity_id: input_boolean.maintenance_mode
-      state: 'on'
+    - condition: and
+      conditions:
+      - condition: time
+        weekday:
+        - sat
+        - sun
+      - condition: state
+        entity_id: input_boolean.heating_timer
+        state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: person.sebastian
+        state: home
+      - condition: state
+        entity_id: input_boolean.maintenance_mode
+        state: 'on'
   action:
   - data_template:
       entity_id: climate.room_heating
@@ -108,21 +114,23 @@
   condition:
     condition: and
     conditions:
-    - condition: time
-      weekday:
-      - sat
-      - sun
-    - condition: state
-      entity_id: input_boolean.heating_timer
-      state: 'on'
-    condition: or
-    conditions:
-    - condition: state
-      entity_id: person.sebastian
-      state: home
-    - condition: state
-      entity_id: input_boolean.maintenance_mode
-      state: 'on'
+    - condition: and
+      conditions:
+      - condition: time
+        weekday:
+        - sat
+        - sun
+      - condition: state
+        entity_id: input_boolean.heating_timer
+        state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: person.sebastian
+        state: home
+      - condition: state
+        entity_id: input_boolean.maintenance_mode
+        state: 'on'
   action:
   - data_template:
       entity_id: climate.room_heating

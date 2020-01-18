@@ -24,6 +24,7 @@ recorder:
     entities:
     - sensor.time
     - sensor.time_date
+    - binary_sensor.presence_25
 
 sensor:
   - platform: time_date
