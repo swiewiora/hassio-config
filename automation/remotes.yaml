@@ -209,7 +209,7 @@
     data:
       entity_id: switch.081021853c71bf3edb01
 # Dimmers
-- id: '1571077635173'
+- id: 'remote_dim_living_room_bulb'
   alias: remote dim living room bulb
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
@@ -223,7 +223,7 @@
       entity_id: script.light_start_dimmer
       variables:
         light: light.ikea_bulb_1
-- id: '1571077733752'
+- id: 'remote_dim_living_room_bulb_stop'
   alias: remote dim living room bulb stop
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
