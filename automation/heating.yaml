@@ -191,6 +191,9 @@
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
       - (states(''sensor.temperature_2'') | float) > 1.0}}'
+  - condition: state
+    entity_id: switch.ikea_plug_2
+    state: 'off'
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
     domain: switch
@@ -209,6 +212,9 @@
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
       - (states(''sensor.temperature_2'') | float) < 0.5 }}'
+  - condition: state
+    entity_id: switch.ikea_plug_2
+    state: 'on'
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
     domain: switch
