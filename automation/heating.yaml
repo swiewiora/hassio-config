@@ -269,9 +269,19 @@
   - platform: state
     entity_id: sensor.temperature_16
   condition: 
-  - condition: numeric_state
-    entity_id: sensor.temperature_16
-    below: 19
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.temperature_16
+      below: 19
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: person.sebastian
+        state: home
+      - condition: state
+        entity_id: input_boolean.maintenance_mode
+        state: 'on'
   action:
   - service: switch.turn_on
     entity_id: 
