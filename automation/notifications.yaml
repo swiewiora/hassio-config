@@ -190,3 +190,17 @@
   - service: telegram_bot.send_message
     data_template:
       message: Lights are on
+- id: 'maintenance_mode_on'
+  alias: Notify that Maintenance mode is on every hour
+  trigger:
+  - platform: state
+    entity_id: input_boolean.maintenance_mode
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.maintenance_mode
+    state: 'on'
+  action:
+  - delay: 01:00:00
+  - service: automation.trigger
+    entity_id: automation.freezer_open
