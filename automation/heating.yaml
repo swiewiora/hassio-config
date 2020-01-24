@@ -168,6 +168,10 @@
     entity_id: person.sebastian
     from: home
     to: not_home
+  condition:
+  - condition: state
+    entity_id: input_boolean.maintenance_mode
+    state: 'off'
   action:
   - service: climate.set_temperature
     data_template:
