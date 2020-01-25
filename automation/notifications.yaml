@@ -202,5 +202,12 @@
     state: 'on'
   action:
   - delay: 01:00:00
+  - condition: state
+    entity_id: input_boolean.maintenance_mode
+    state: 'on'
+  - service: telegram_bot.send_message
+    data_template:
+      title: Maintenance mode
+      message: Maintenance mode is on
   - service: automation.trigger
     entity_id: automation.freezer_open
