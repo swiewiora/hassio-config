@@ -191,6 +191,9 @@
     entity_id: climate.room_heating
   - platform: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float) }}'
+  - platform: state
+    entity_id: climate.room_heating
+    to: 'heat'
   condition: 
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
@@ -198,6 +201,9 @@
   - condition: state
     entity_id: switch.ikea_plug_2
     state: 'off'
+  - condition: state
+    entity_id: climate.room_heating
+    state: 'heat'
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
     domain: switch
@@ -212,6 +218,9 @@
     entity_id: climate.room_heating
   - platform: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float) }}'
+  - platform: state
+    entity_id: climate.room_heating
+    to: 'off'
   condition:
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
@@ -219,6 +228,9 @@
   - condition: state
     entity_id: switch.ikea_plug_2
     state: 'on'
+  - condition: state
+    entity_id: climate.room_heating
+    state: 'off'
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
     domain: switch
