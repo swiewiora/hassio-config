@@ -210,4 +210,4 @@
       title: Maintenance mode
       message: Maintenance mode is on
   - service: automation.trigger
-    entity_id: automation.freezer_open
+    entity_id: automation.maintenance_mode_on
