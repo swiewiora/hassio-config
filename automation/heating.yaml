@@ -219,6 +219,10 @@
   - platform: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float) }}'
   - platform: state
+    entity_id: switch.ikea_plug
+    from: 'on'
+    to: 'off'
+  - platform: state
     entity_id: climate.room_heating
     to: 'off'
   condition:
@@ -228,9 +232,6 @@
   - condition: state
     entity_id: switch.ikea_plug_2
     state: 'on'
-  - condition: state
-    entity_id: climate.room_heating
-    state: 'off'
   action:
   - device_id: b95dc98ae71941c68e4f32961e25ae2a
     domain: switch
