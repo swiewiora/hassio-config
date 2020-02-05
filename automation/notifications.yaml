@@ -101,7 +101,9 @@
   alias: window open - remind when away
   trigger:
   - platform: state
-    entity_id: person.sebastian
+    entity_id: 
+    - device_tracker.mi9se_miphone
+    - person.sebastian
     from: home
     to: not_home
   - platform: state
@@ -163,19 +165,34 @@
   alias: Lights on while away
   trigger:
   - platform: state
-    entity_id: person.sebastian
+    entity_id: 
+    - person.sebastian
+    - device_tracker.mi9se_miphone
     from: home
     to: not_home
   - platform: state
-    entity_id: group.my_all_lights
+    entity_id: 
+    - light.cable_onoff_2
+    - light.ikea_bulb_1
+    - light.ikea_bulb_2
+    - light.osram_bulb_1
+    - switch.osram_plug_3
+    - switch.osram_plug_1
+    - switch.481240053c71bf3eb537
+    - switch.osram_plug_2
     from: 'off'
     to: 'on'
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: person.sebastian
-      state: not_home
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: device_tracker.mi9se_miphone
+        state: not_home
+      - condition: state
+        entity_id: person.sebastian
+        state: not_home
     - condition: state
       entity_id: input_boolean.maintenance_mode
       state: 'off'
@@ -183,10 +200,6 @@
       entity_id: group.my_all_lights
       state: 'on'
   action:
-  - delay: 00:00:30
-  - condition: state
-    entity_id: person.sebastian
-    state: not_home
   - service: telegram_bot.send_message
     data_template:
       message: Lights are on

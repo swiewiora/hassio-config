@@ -19,10 +19,23 @@
     from: 'on'
     to: 'off'
     for: 00:05:00
+  - platform: state
+    entity_id: switch.osram_plug_3
+    from: 'on'
+    to: 'off'
   condition:
-  - condition: state
-    entity_id: input_boolean.motion_triggered_bathroom_bulb
-    state: 'on'
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_triggered_bathroom_bulb
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.presence_30
+      state: 'off'
+      for: 00:05:00
+    - condition: state
+      entity_id: switch.osram_plug_3
+      state: 'off'
   action:
   - service: light.turn_off
     entity_id: light.osram_bulb_1
@@ -54,7 +67,7 @@
     state: 'home'
   action:
   - service: switch.turn_on
-    entity_id: switch.08102185a4cf12a8361f
+    entity_id: switch.osram_plug_2
 - alias: presence - turn off desk lamp
   trigger:
   - platform: state
@@ -73,14 +86,28 @@
     platform: state
     to: 'on'
   condition:
-  - condition: template
-    value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
+    condition: or
+    conditions:
+    - condition: template
+      value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
+    - condition: template
+      value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
   action:
   - service: light.turn_on
     entity_id: light.osram_bulb_2
-  - delay: 00:05:00
+- id: 'entrance_close'
+  alias: Entrance door opened - turn off light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.openclose_11
+    from: 'on'
+    to: 'off'
+    for: 00:05:00
+  condition:
   - condition: state
     entity_id: binary_sensor.openclose_11
     state: 'off'
+    for: 00:05:00
+  action:
   - service: light.turn_off
     entity_id: light.osram_bulb_2

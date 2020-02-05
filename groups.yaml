@@ -10,7 +10,10 @@ my_all_lights:
   name: All lights
   entities:
   - group.bulbs
-  - light.cable_onoff_2
   - light.cable_onoff
+  - light.cable_onoff_2
   - switch.osram_plug_1
+  - switch.osram_plug_2
   - switch.osram_plug_3
+  - switch.481240053c71bf3eb537
+  
