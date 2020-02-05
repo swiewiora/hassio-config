@@ -64,7 +64,7 @@
     for: 00:30:00
   action:
   - service: switch.turn_off
-    entity_id: switch.08102185a4cf12a8361f
+    entity_id: switch.osram_plug_2
 - id: 'entrance_open'
   alias: Entrance door opened - turn on light
   trigger:
