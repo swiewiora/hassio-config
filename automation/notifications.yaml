@@ -63,7 +63,7 @@
   - service: light.turn_off
     data:
       entity_id: group.bulbs
-  - service: notify.telegram
+  - service: telegram_bot.send_message
     data:
       message: Home Assistant started after unexpected shutdown.
       title: Home Assistant started
