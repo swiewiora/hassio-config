@@ -150,7 +150,7 @@
       entity_id: input_boolean.maintenance_mode
       state: 'off'
   action:
-  - delay: 00:00:30
+  - delay: 00:01:00
   - condition: state
     entity_id: person.sebastian
     state: not_home
