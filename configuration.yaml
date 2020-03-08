@@ -2,8 +2,8 @@ default_config:
 
 http:
   base_url: !secret base_url
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
+#   ssl_certificate: /ssl/fullchain.pem
+#   ssl_key: /ssl/privkey.pem
 
 group: !include groups.yaml
 automation: !include_dir_merge_list automation/
