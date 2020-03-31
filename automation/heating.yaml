@@ -32,10 +32,13 @@
     entity_id: 
     - switch.ikea_plug
     - switch.ikea_plug_2
-  - data_template:
+  - service: climate.turn_on
+    data:
+      entity_id: climate.bathroom_heating
+  - service: climate.set_temperature
+    data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
-    service: climate.set_temperature
 - id: heating_evening_off_wd
   alias: heating - weekday night
   trigger:
@@ -66,10 +69,13 @@
         entity_id: input_boolean.maintenance_mode
         state: 'on'
   action:
-  - data_template:
+  - service: climate.set_temperature
+    data_template:
       entity_id: climate.room_heating
       temperature: '{{ states(''input_number.target_temp_room_low'') }}'
-    service: climate.set_temperature
+  - service: climate.turn_off
+    data:
+      entity_id: climate.bathroom_heating
 - id: heating_morning_on_we
   alias: heating - weekend morning
   trigger:
@@ -97,14 +103,13 @@
         entity_id: input_boolean.maintenance_mode
         state: 'on'
   action:
-  - data_template:
-      entity_id: climate.room_heating
-      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
-    service: climate.set_temperature
-  - data_template:
+  - service: climate.set_temperature
+    data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
-    service: climate.set_temperature
+  - service: climate.turn_on
+    data:
+      entity_id: climate.bathroom_heating
 - id: heating_evening_off_we
   alias: heating - weekend night
   trigger:
@@ -132,14 +137,13 @@
         entity_id: input_boolean.maintenance_mode
         state: 'on'
   action:
-  - data_template:
+  - service: climate.set_temperature
+    data_template:
       entity_id: climate.room_heating
       temperature: '{{ states(''input_number.target_temp_room_low'') }}'
-    service: climate.set_temperature
-  - data_template:
+  - service: climate.turn_off
+    data:
       entity_id: climate.bathroom_heating
-      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
-    service: climate.set_temperature
 - id: heating_on_when_home
   alias: heating - turn heating on on arrival
   trigger:
@@ -152,15 +156,6 @@
     data:
       preset_mode: none
       entity_id: all
-  - delay: 00:00:05
-  - service: climate.set_temperature
-    data_template:
-      entity_id: climate.bathroom_heating
-      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
-  - service: climate.set_temperature
-    data_template:
-      entity_id: climate.room_heating
-      temperature: '{{ states(''input_number.target_temp_room_high'') }}'
 - id: heating_off_when_away
   alias: heating - turn off when we leave home
   trigger:
@@ -173,16 +168,11 @@
     entity_id: input_boolean.maintenance_mode
     state: 'off'
   action:
-  - service: climate.set_temperature
-    data_template:
-      entity_id: climate.bathroom_heating
-      temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
-  - delay: 00:00:05
   - service: climate.set_preset_mode
     data:
       preset_mode: away
       entity_id: all
-- id: '1570365018863'
+- id: 'heating-kitchen_on'
   alias: heating - kitchen on
   trigger:
   - platform: state
@@ -209,7 +199,7 @@
     domain: switch
     entity_id: switch.ikea_plug_2
     type: turn_on
-- id: '1570365069845'
+- id: 'heating-kitchen_off'
   alias: heating - kitchen off
   trigger:
   - platform: state
@@ -281,7 +271,7 @@
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_high'') }}'
 - id: 'heating-minimum_temperature'
-  alias: heating - minimum temperature
+  alias: heating - minimum temperature in bedroom
   trigger:
   - platform: state
     entity_id: sensor.temperature_16
