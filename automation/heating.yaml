@@ -157,7 +157,7 @@
       preset_mode: none
       entity_id: all
 - id: heating_off_when_away
-  alias: heating - turn off when we leave home
+  alias: heating - turn off when leave home
   trigger:
   - platform: state
     entity_id: person.sebastian
@@ -184,6 +184,8 @@
   - platform: state
     entity_id: climate.room_heating
     to: 'heat'
+  - platform: template
+    value_template: "{{ state_attr('climate.room_heating','hvac_action') }}"
   condition: 
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
@@ -215,6 +217,8 @@
   - platform: state
     entity_id: climate.room_heating
     to: 'off'
+  - platform: template
+    value_template: "{{ state_attr('climate.room_heating','hvac_action') }}"
   condition:
   - condition: template
     value_template: '{{ (state_attr(''climate.room_heating'', ''temperature'') | float)
