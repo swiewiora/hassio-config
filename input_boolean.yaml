@@ -5,3 +5,4 @@ heating_timer:
   name: Use heating timer
   icon: mdi:toggle-switch
 motion_triggered_bathroom_bulb:
+motion_triggered_kitchen_light:

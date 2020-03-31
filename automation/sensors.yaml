@@ -52,6 +52,55 @@
   action:
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_bathroom_bulb
+
+- alias: presence - turn on kitchen light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor_3
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.motion_sensor_3'', ''dark'') == true }}'
+  action:
+  - service: light.turn_on
+    entity_id: light.cable_onoff_2
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.motion_triggered_kitchen_light
+- alias: presence - turn off kitchen light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor_3
+    from: 'on'
+    to: 'off'
+    for: 00:05:00
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_triggered_kitchen_light
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.motion_sensor_3
+      state: 'off'
+      for: 00:05:00
+  action:
+  - service: light.turn_off
+    entity_id: light.cable_onoff_2
+- alias: presence - reset motion_triggered_kitchen_light
+  trigger:
+  - platform: state
+    entity_id: light.cable_onoff_2
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.motion_triggered_kitchen_light
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.motion_triggered_kitchen_light
+
 - alias: presence - turn on desk lamp
   trigger:
   - platform: state
