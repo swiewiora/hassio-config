@@ -83,6 +83,11 @@ asuswrt:
     - download_speed
     - upload_speed
 
+device_tracker:
+  - platform: asuswrt
+    new_device_defaults:
+      track_new_devices: false
+
 climate:
   - platform: generic_thermostat
     name: Room Heating
