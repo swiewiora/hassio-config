@@ -1,4 +1,5 @@
-- alias: presence - turn on bathroom light
+- id: presence-bathroom_light_on
+  alias: presence - turn on bathroom light
   trigger:
   - platform: state
     entity_id: binary_sensor.presence_30
@@ -12,7 +13,8 @@
     entity_id: light.osram_bulb_1
   - service: input_boolean.turn_on
     entity_id: input_boolean.motion_triggered_bathroom_bulb
-- alias: presence - turn off bathroom light
+- id: presence-bathroom_light_off
+  alias: presence - turn off bathroom light
   trigger:
   - platform: state
     entity_id: binary_sensor.presence_30
@@ -39,7 +41,8 @@
   action:
   - service: light.turn_off
     entity_id: light.osram_bulb_1
-- alias: presence - reset motion_triggered_bathroom_bulb
+- id: presence-reset_bathroom_boolean
+  alias: presence - reset motion_triggered_bathroom_bulb
   trigger:
   - platform: state
     entity_id: light.osram_bulb_1
@@ -53,7 +56,8 @@
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_bathroom_bulb
 
-- alias: presence - turn on kitchen light
+- id: presence-kitchen_light_on
+  alias: presence - turn on kitchen light
   trigger:
   - platform: state
     entity_id: binary_sensor.motion_sensor_3
@@ -67,7 +71,8 @@
     entity_id: light.cable_onoff_2
   - service: input_boolean.turn_on
     entity_id: input_boolean.motion_triggered_kitchen_light
-- alias: presence - turn off kitchen light
+- id: presence-kitchen_light_off
+  alias: presence - turn off kitchen light
   trigger:
   - platform: state
     entity_id: binary_sensor.motion_sensor_3
@@ -87,7 +92,8 @@
   action:
   - service: light.turn_off
     entity_id: light.cable_onoff_2
-- alias: presence - reset motion_triggered_kitchen_light
+- id: presence-reset_bathroom_boolean
+  alias: presence - reset motion_triggered_kitchen_light
   trigger:
   - platform: state
     entity_id: light.cable_onoff_2
@@ -101,7 +107,8 @@
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_kitchen_light
 
-- alias: presence - turn on desk lamp
+- id: presence-desk_lamp_on
+  alias: presence - turn on desk lamp
   trigger:
   - platform: state
     entity_id: binary_sensor.presence_25
@@ -117,7 +124,8 @@
   action:
   - service: switch.turn_on
     entity_id: switch.osram_plug_2
-- alias: presence - turn off desk lamp
+- id: presence-desk_lamp_off
+  alias: presence - turn off desk lamp
   trigger:
   - platform: state
     entity_id: binary_sensor.presence_25
