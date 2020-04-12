@@ -239,14 +239,16 @@
     from: 'on'
     to: 'off'
     for: 00:03:00
+  - platform: state
+    entity_id: binary_sensor.presence_30
+    from: 'on'
+    to: 'off'
+    for: 00:03:00
   condition:
-  - condition: template
-    value_template: '{{ (state_attr(''climate.bathroom_heating'', ''temperature'') | float)
-      >= (states(''input_number.target_temp_bathroom_high'') | float) }}'
+  - condition: state
+    entity_id: binary_sensor.presence_30
+    state: 'off'
   action:
-  - service: switch.turn_off
-    data:
-      entity_id: switch.osram_plug_4
   - service: climate.set_temperature
     data_template:
       entity_id: climate.bathroom_heating
@@ -260,16 +262,10 @@
     to: 'on'
     for: 00:00:15
   condition:
-  - condition: template
-    value_template: '{{ (state_attr(''climate.bathroom_heating'', ''temperature'') | float)
-      <= (states(''input_number.target_temp_bathroom_low'') | float) }}'
   - condition: state
     entity_id: binary_sensor.presence_30
     state: 'on'
   action:
-  - service: switch.turn_on
-    data:
-      entity_id: switch.osram_plug_4
   - service: climate.set_temperature
     data_template:
       entity_id: climate.bathroom_heating

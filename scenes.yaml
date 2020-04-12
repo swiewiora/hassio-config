@@ -1,0 +1,17 @@
+- id: '1586700800553'
+  name: Night
+  entities:
+    light.ikea_bulb_1:
+      friendly_name: Lightbulb - living room
+      is_deconz_group: false
+      max_mireds: 500
+      min_mireds: 153
+      state: 'off'
+      supported_features: 43
+    light.ikea_bulb_2:
+      friendly_name: Lightbulb - bedroom
+      is_deconz_group: false
+      max_mireds: 500
+      min_mireds: 153
+      state: 'off'
+      supported_features: 43

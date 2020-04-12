@@ -31,6 +31,7 @@ sensor:
     display_options:
       - 'time'
       - 'time_date'
+  - platform: authenticated
 
 ios:
 
@@ -111,4 +112,8 @@ climate:
 hacs:
   token: !secret hacs_github_token
   sidepanel_title: Community Store
-  theme: true
+  
+airvisual:
+  api_key: 0e0fdc2a-0ccb-4ea3-9d0a-1fb8767d352b
+
+uilogs:

@@ -92,7 +92,7 @@
   action:
   - service: light.turn_off
     entity_id: light.cable_onoff_2
-- id: presence-reset_bathroom_boolean
+- id: presence-reset_kitchen_boolean
   alias: presence - reset motion_triggered_kitchen_light
   trigger:
   - platform: state
