@@ -1,20 +1,16 @@
 default_config:
-
 http:
   base_url: !secret base_url
 #   ssl_certificate: /ssl/fullchain.pem
 #   ssl_key: /ssl/privkey.pem
-
 group: !include groups.yaml
 automation: !include_dir_merge_list automation/
 script: !include scripts.yaml
 input_boolean: !include input_boolean.yaml
 input_number: !include input_number.yaml
 input_datetime: !include input_datetime.yaml
-
 frontend:
   themes: !include_dir_merge_named themes
-
 logger:
   default: warning
 history:
@@ -25,28 +21,22 @@ recorder:
     - sensor.time
     - sensor.time_date
     - binary_sensor.presence_25
-
 sensor:
   - platform: time_date
     display_options:
       - 'time'
       - 'time_date'
-  - platform: authenticated
-
 ios:
-
 tuya:
   username: !secret tuya_login
   password: !secret tuya_password
   country_code: 420
   platform: smart_life
-
 google_assistant:
   project_id: !secret google_assistant_id
   entity_config:
     group.all_automations:
       expose: false
-
 notify:
   - name: web
     platform: html5
@@ -69,13 +59,11 @@ notify:
     - service: web
     - service: ios_i7sw
     - service: mi_9_se
-
 telegram_bot:
   - platform: broadcast
     api_key: !secret telegram_api_key
     allowed_chat_ids:
       - !secret telegram_chat_id
-
 asuswrt:
   host: !secret asuswrt_host
   username: !secret asuswrt_username
@@ -83,12 +71,10 @@ asuswrt:
   sensors:
     - download_speed
     - upload_speed
-
 device_tracker:
   - platform: asuswrt
     new_device_defaults:
       track_new_devices: false
-
 climate:
   - platform: generic_thermostat
     name: Room Heating
@@ -108,12 +94,16 @@ climate:
     max_temp: 25
     hot_tolerance: 0.5
     cold_tolerance: 0.5
-
 hacs:
   token: !secret hacs_github_token
   sidepanel_title: Community Store
-  
 airvisual:
-  api_key: 0e0fdc2a-0ccb-4ea3-9d0a-1fb8767d352b
-
+  api_key: !secret air_visual_token
+  geographies:
+  - latitude: 50.012809
+    longitude: 14.387722
 uilogs:
+wake_on_lan:
+switch:
+  - platform: wake_on_lan
+    mac: D8:50:E6:01:E3:6F
