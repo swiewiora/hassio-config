@@ -173,6 +173,17 @@
   - service: switch.toggle
     data:
       entity_id: switch.081021853c71bf3edb01
+- id: 'wake_on_lan'
+  alias: remote - wake on lan
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_long_press
+  action:
+  - service: switch.turn_on
+    entity_id: switch.wake_on_lan
 - id: '1570606700515'
   alias: remote - entrance bulb
   trigger:
@@ -196,6 +207,7 @@
     domain: light
     entity_id: light.osram_bulb_2
     type: toggle
+
 # Dimmers
 - id: 'remote_dim_living_room_bulb'
   alias: remote dim living room bulb
