@@ -59,8 +59,7 @@
     type: remote_button_long_press
   action:
   - service: switch.toggle
-    data:
-      entity_id: switch.08102185a4cf12a83367
+    entity_id: switch.08102185a4cf12a83367
 - id: '1570214150331'
   alias: remote desk lamp switch
   trigger:
@@ -75,9 +74,8 @@
     subtype: right
     type: remote_button_long_press
   action:
-  - data:
-      entity_id: switch.osram_plug_2
-    service: switch.toggle
+  - service: switch.toggle
+    entity_id: switch.osram_plug_2
 - id: '1570214365100'
   alias: remote bathroom bulb
   trigger:
