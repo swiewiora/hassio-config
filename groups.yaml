@@ -16,4 +16,14 @@ my_all_lights:
   - switch.osram_plug_2
   - switch.osram_plug_3
   - switch.481240053c71bf3eb537
-  
+
+lights_notification:
+  name: Lights that should be turned off while away
+  entities:
+  - light.cable_onoff_2
+  - light.ikea_bulb_1
+  - light.ikea_bulb_2
+  - light.osram_bulb_1
+  - switch.osram_plug_3
+  - switch.osram_plug_1
+  - switch.osram_plug_2

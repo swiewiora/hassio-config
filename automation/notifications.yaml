@@ -171,15 +171,7 @@
     from: home
     to: not_home
   - platform: state
-    entity_id: 
-    - light.cable_onoff_2
-    - light.ikea_bulb_1
-    - light.ikea_bulb_2
-    - light.osram_bulb_1
-    - switch.osram_plug_3
-    - switch.osram_plug_1
-    - switch.osram_plug_2
-    from: 'off'
+    entity_id: group.lights_notification
     to: 'on'
   condition:
     condition: and
@@ -196,14 +188,7 @@
       entity_id: input_boolean.maintenance_mode
       state: 'off'
     - condition: state
-      entity_id: 
-      - light.cable_onoff_2
-      - light.ikea_bulb_1
-      - light.ikea_bulb_2
-      - light.osram_bulb_1
-      - switch.osram_plug_3
-      - switch.osram_plug_1
-      - switch.osram_plug_2
+      entity_id: group.lights_notification
       state: 'on'
   action:
   - service: telegram_bot.send_message
