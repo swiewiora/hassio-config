@@ -178,7 +178,6 @@
     - light.osram_bulb_1
     - switch.osram_plug_3
     - switch.osram_plug_1
-    - switch.481240053c71bf3eb537
     - switch.osram_plug_2
     from: 'off'
     to: 'on'
@@ -197,7 +196,14 @@
       entity_id: input_boolean.maintenance_mode
       state: 'off'
     - condition: state
-      entity_id: group.my_all_lights
+      entity_id: 
+      - light.cable_onoff_2
+      - light.ikea_bulb_1
+      - light.ikea_bulb_2
+      - light.osram_bulb_1
+      - switch.osram_plug_3
+      - switch.osram_plug_1
+      - switch.osram_plug_2
       state: 'on'
   action:
   - service: telegram_bot.send_message
