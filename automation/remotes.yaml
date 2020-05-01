@@ -166,7 +166,7 @@
     domain: deconz
     platform: device
     subtype: turn_on
-    type: remote_button_short_press
+    type: remote_button_long_press
   action:
   - service: switch.toggle
     data:
@@ -178,7 +178,7 @@
     domain: deconz
     platform: device
     subtype: turn_on
-    type: remote_button_long_press
+    type: remote_button_short_press
   action:
   - service: switch.turn_on
     entity_id: switch.wake_on_lan
