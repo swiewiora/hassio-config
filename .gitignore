@@ -43,3 +43,4 @@ ozw_log.txt
 # Development files
 custom_components/
 .ip_authenticated.yaml
+themes/
