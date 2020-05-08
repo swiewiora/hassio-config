@@ -215,3 +215,22 @@
       message: Maintenance mode is on
   - service: automation.trigger
     entity_id: automation.maintenance_mode_on
+- id: 'heating_bathroom_on'
+  alias: Bathroom heating is left on
+  trigger:
+  - entity_id: switch.osram_plug_4
+    platform: state    
+    for: 01:00:00
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: switch.osram_plug_4
+    state: 'on'
+  - condition: state
+    entity_id: climate.bathroom_heating
+    state: 'off'
+  action:
+  - data:
+      message: Heating in bathroom is on
+    service: telegram_bot.send_message
