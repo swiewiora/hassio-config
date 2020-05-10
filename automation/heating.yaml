@@ -231,8 +231,8 @@
     domain: switch
     entity_id: switch.ikea_plug_2
     type: turn_off
-- id: 'heating_bathroom_off'
-  alias: heating - turn off bathroom heating
+- id: 'heating_bathroom_off_light'
+  alias: heating - turn off bathroom heating when mirror light is off for 3 min
   trigger:
   - platform: state
     entity_id: switch.osram_plug_3
@@ -253,8 +253,8 @@
     data_template:
       entity_id: climate.bathroom_heating
       temperature: '{{ states(''input_number.target_temp_bathroom_low'') }}'
-- id: 'heating_bathroom_on'
-  alias: heating - turn on bathroom heating
+- id: 'heating_bathroom_on_light'
+  alias: heating - turn on bathroom heating when mirror light is on for 15 sec
   trigger:
   - platform: state
     entity_id: switch.osram_plug_3
