@@ -234,3 +234,32 @@
   - data:
       message: Heating in bathroom is on
     service: telegram_bot.send_message
+
+- id: presence-desk_lamp_on
+  alias: presence - turn on desk lamp
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_25
+    from: 'off'
+    to: 'on'
+    for: 00:10:00
+  - platform: template
+    value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.presence_25
+    state: 'on'
+    for: 00:10:00
+  - condition: template
+    value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
+  - condition: state
+    entity_id: device_tracker.n550jv
+    state: 'home'
+  - condition: state
+    entity_id: switch.osram_plug_2
+    state: 'off'
+  action:
+  - service: telegram_bot.send_message
+    data:
+      message: Turn on light
+    

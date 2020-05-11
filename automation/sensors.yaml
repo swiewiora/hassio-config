@@ -107,34 +107,17 @@
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_kitchen_light
 
-- id: presence-desk_lamp_on
-  alias: presence - turn on desk lamp
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.presence_25
-    from: 'off'
-    to: 'on'
-    for: 00:10:00
-  condition:
-  - condition: template
-    value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
-  - condition: state
-    entity_id: device_tracker.n550jv
-    state: 'home'
-  action:
-  - service: switch.turn_on
-    entity_id: switch.osram_plug_2
-- id: presence-desk_lamp_off
-  alias: presence - turn off desk lamp
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.presence_25
-    from: 'on'
-    to: 'off'
-    for: 00:30:00
-  action:
-  - service: switch.turn_off
-    entity_id: switch.osram_plug_2
+# - id: presence-desk_lamp_off
+#   alias: presence - turn off desk lamp
+#   trigger:
+#   - platform: state
+#     entity_id: binary_sensor.presence_25
+#     from: 'on'
+#     to: 'off'
+#     for: 00:30:00
+#   action:
+#   - service: switch.turn_off
+#     entity_id: switch.osram_plug_2
 - id: 'entrance_open'
   alias: Entrance door opened - turn on light
   trigger:
