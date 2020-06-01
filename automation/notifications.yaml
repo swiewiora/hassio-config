@@ -117,7 +117,7 @@
     state: 'on'
   - condition: template
     value_template: 
-      '{{ (state_attr(''weather.home'', ''temperature'') | float) < 20 }}'
+      '{{ (state_attr(''weather.home'', ''temperature'') | float) < 15 }}'
   action:
   - service: climate.set_temperature
     data_template:
