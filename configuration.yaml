@@ -96,3 +96,7 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     mac: D8:50:E6:01:E3:6F
+    name: WOL - Asus
+  - platform: wake_on_lan
+    mac: 00:E0:4C:69:3D:29
+    name: WOL - Realtek

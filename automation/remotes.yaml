@@ -59,7 +59,7 @@
     type: remote_button_long_press
   action:
   - service: switch.toggle
-    entity_id: switch.08102185a4cf12a83367
+    entity_id: switch.smart_plug_16
 - id: '1570214150331'
   alias: remote desk lamp switch
   trigger:
@@ -75,7 +75,7 @@
     type: remote_button_long_press
   action:
   - service: switch.toggle
-    entity_id: switch.osram_plug_2
+    entity_id: switch.smart_plug_14
 - id: '1570214365100'
   alias: remote bathroom bulb
   trigger:
@@ -158,7 +158,7 @@
     type: remote_button_long_press
   action:
   - service: switch.toggle
-    entity_id: switch.08102185a4cf12a8361f
+    entity_id: switch.osram_plug_2
 - id: '1570484180533'
   alias: remote cooling
   trigger:
