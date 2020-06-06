@@ -181,7 +181,7 @@
     type: remote_button_short_press
   action:
   - service: switch.turn_on
-    entity_id: switch.wake_on_lan
+    entity_id: switch.wol_asus
 - id: '1570606700515'
   alias: remote - entrance bulb
   trigger:
