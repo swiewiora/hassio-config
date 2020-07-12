@@ -62,10 +62,12 @@ telegram_bot:
 asuswrt:
   host: !secret asuswrt_host
   username: !secret asuswrt_username
+  port: 35
   ssh_key: /ssl/asuswrt_ssh
   sensors:
     - download_speed
     - upload_speed
+    - devices
 device_tracker:
   - platform: asuswrt
     new_device_defaults:
@@ -97,6 +99,9 @@ switch:
   - platform: wake_on_lan
     mac: D8:50:E6:01:E3:6F
     name: WOL - Asus
+  - platform: wake_on_lan
+    mac: 38:22:E2:EF:A2:96
+    name: WOL - HP
   - platform: wake_on_lan
     mac: 00:E0:4C:69:3D:29
     name: WOL - Realtek

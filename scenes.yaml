@@ -15,3 +15,20 @@
       min_mireds: 153
       state: 'off'
       supported_features: 43
+- id: '1592651419472'
+  name: Day
+  entities:
+    light.ikea_bulb_1:
+      friendly_name: Lightbulb - living room
+      is_deconz_group: false
+      max_mireds: 65535
+      min_mireds: 153
+      state: 'off'
+      supported_features: 43
+    light.ikea_bulb_2:
+      friendly_name: Lightbulb - bedroom
+      is_deconz_group: false
+      max_mireds: 65535
+      min_mireds: 153
+      state: 'off'
+      supported_features: 43
