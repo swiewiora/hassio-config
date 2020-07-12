@@ -59,7 +59,7 @@
     type: remote_button_long_press
   action:
   - service: switch.toggle
-    entity_id: switch.smart_plug_16
+    entity_id: switch.mija_1
 - id: '1570214150331'
   alias: remote desk lamp switch
   trigger:
@@ -160,7 +160,7 @@
   - service: switch.toggle
     entity_id: switch.osram_plug_2
 - id: '1570484180533'
-  alias: remote cooling
+  alias: remote - wake on lan HP
   trigger:
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
@@ -170,9 +170,9 @@
   action:
   - service: switch.toggle
     data:
-      entity_id: switch.081021853c71bf3edb01
+      entity_id: switch.wol_hp
 - id: 'wake_on_lan'
-  alias: remote - wake on lan
+  alias: remote - wake on lan ASUS
   trigger:
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
