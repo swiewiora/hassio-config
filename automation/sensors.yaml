@@ -1,51 +1,99 @@
-- id: presence-bathroom_light_on
-  alias: presence - turn on bathroom light
+- id: presence-kitchen_light_on
+  alias: presence - turn on kitchen light
   trigger:
   - platform: state
-    entity_id: binary_sensor.presence_30
+    entity_id: binary_sensor.motion_sensor_2
     from: 'off'
     to: 'on'
   condition:
   - condition: template
-    value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
+    value_template: '{{ state_attr(''sensor.light_sensor_2'', ''dark'') == true }}'
   action:
   - service: light.turn_on
-    entity_id: light.osram_bulb_1
+    entity_id: light.ikea_bulb_1
+  - service: switch.turn_on
+    entity_id: switch.mija_1
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.motion_triggered_kitchen_light
+- id: presence-kitchen_light_off
+  alias: presence - turn off kitchen light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor_2
+    from: 'on'
+    to: 'off'
+    for: 00:05:00
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_triggered_kitchen_light
+      state: 'on'
+  action:
+  - service: light.turn_off
+    entity_id: light.ikea_bulb_1
+  - service: switch.turn_off
+    entity_id: switch.mija_1
+- id: presence-reset_kitchen_boolean
+  alias: presence - reset motion_triggered_kitchen_light
+  trigger:
+  - platform: state
+    entity_id: 
+    - light.ikea_bulb_1
+    - switch.mija_1
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.motion_triggered_kitchen_light
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.motion_triggered_kitchen_light
+
+- id: presence-bathroom_light_on
+  alias: presence - turn on bathroom light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor_3
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.light_sensor_3'', ''dark'') == true }}'
+  action:
+  - service: light.turn_on
+    entity_id: 
+    - light.ikea_bulb_2
+    - light.osram_bulb_2
   - service: input_boolean.turn_on
     entity_id: input_boolean.motion_triggered_bathroom_bulb
 - id: presence-bathroom_light_off
   alias: presence - turn off bathroom light
   trigger:
   - platform: state
-    entity_id: binary_sensor.presence_30
+    entity_id: binary_sensor.motion_sensor_3
     from: 'on'
     to: 'off'
     for: 00:05:00
-  - platform: state
-    entity_id: switch.osram_plug_3
-    from: 'on'
-    to: 'off'
   condition:
     condition: and
     conditions:
     - condition: state
       entity_id: input_boolean.motion_triggered_bathroom_bulb
       state: 'on'
-    - condition: state
-      entity_id: binary_sensor.presence_30
-      state: 'off'
-      for: 00:05:00
-    - condition: state
-      entity_id: switch.osram_plug_3
-      state: 'off'
   action:
   - service: light.turn_off
-    entity_id: light.osram_bulb_1
+    entity_id: 
+    - light.ikea_bulb_2
+    - light.osram_bulb_2
 - id: presence-reset_bathroom_boolean
   alias: presence - reset motion_triggered_bathroom_bulb
   trigger:
   - platform: state
-    entity_id: light.osram_bulb_1
+    entity_id: 
+    - light.ikea_bulb_2
+    - light.osram_bulb_2
     from: 'on'
     to: 'off'
   condition:
@@ -56,26 +104,26 @@
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_bathroom_bulb
 
-- id: presence-kitchen_light_on
-  alias: presence - turn on kitchen light
+- id: presence-bedroom_light_on
+  alias: presence - turn on bedroom light
   trigger:
   - platform: state
-    entity_id: binary_sensor.motion_sensor_3
+    entity_id: binary_sensor.motion_sensor_4
     from: 'off'
     to: 'on'
   condition:
   - condition: template
-    value_template: '{{ state_attr(''sensor.motion_sensor_3'', ''dark'') == true }}'
+    value_template: '{{ state_attr(''sensor.light_sensor_4'', ''dark'') == true }}'
   action:
   - service: light.turn_on
     entity_id: light.cable_onoff_2
   - service: input_boolean.turn_on
-    entity_id: input_boolean.motion_triggered_kitchen_light
-- id: presence-kitchen_light_off
-  alias: presence - turn off kitchen light
+    entity_id: input_boolean.motion_triggered_bedroom_light
+- id: presence-bedroom_light_off
+  alias: presence - turn off bedroom light
   trigger:
   - platform: state
-    entity_id: binary_sensor.motion_sensor_3
+    entity_id: binary_sensor.motion_sensor_4
     from: 'on'
     to: 'off'
     for: 00:05:00
@@ -83,17 +131,13 @@
     condition: and
     conditions:
     - condition: state
-      entity_id: input_boolean.motion_triggered_kitchen_light
+      entity_id: input_boolean.motion_triggered_bedroom_light
       state: 'on'
-    - condition: state
-      entity_id: binary_sensor.motion_sensor_3
-      state: 'off'
-      for: 00:05:00
   action:
   - service: light.turn_off
     entity_id: light.cable_onoff_2
-- id: presence-reset_kitchen_boolean
-  alias: presence - reset motion_triggered_kitchen_light
+- id: presence-reset_bedroom_boolean
+  alias: presence - reset motion_triggered_bedroom_light
   trigger:
   - platform: state
     entity_id: light.cable_onoff_2
@@ -101,11 +145,11 @@
     to: 'off'
   condition:
   - condition: state
-    entity_id: input_boolean.motion_triggered_kitchen_light
+    entity_id: input_boolean.motion_triggered_bedroom_light
     state: 'on'
   action:
   - service: input_boolean.turn_off
-    entity_id: input_boolean.motion_triggered_kitchen_light
+    entity_id: input_boolean.motion_triggered_bedroom_light
 
 # - id: presence-desk_lamp_off
 #   alias: presence - turn off desk lamp
@@ -118,36 +162,36 @@
 #   action:
 #   - service: switch.turn_off
 #     entity_id: switch.osram_plug_2
-- id: 'entrance_open'
-  alias: Entrance door opened - turn on light
-  trigger:
-  - entity_id: binary_sensor.openclose_11
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition:
-    condition: or
-    conditions:
-    - condition: template
-      value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
-    - condition: template
-      value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
-  action:
-  - service: light.turn_on
-    entity_id: light.osram_bulb_2
-- id: 'entrance_close'
-  alias: Entrance door opened - turn off light
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.openclose_11
-    from: 'on'
-    to: 'off'
-    for: 00:05:00
-  condition:
-  - condition: state
-    entity_id: binary_sensor.openclose_11
-    state: 'off'
-    for: 00:05:00
-  action:
-  - service: light.turn_off
-    entity_id: light.osram_bulb_2
+# - id: 'entrance_open'
+#   alias: Entrance door opened - turn on light
+#   trigger:
+#   - entity_id: binary_sensor.openclose_11
+#     from: 'off'
+#     platform: state
+#     to: 'on'
+#   condition:
+#     condition: or
+#     conditions:
+#     - condition: template
+#       value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
+#     - condition: template
+#       value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
+#   action:
+#   - service: light.turn_on
+#     entity_id: light.osram_bulb_2
+# - id: 'entrance_close'
+#   alias: Entrance door closed - turn off light
+#   trigger:
+#   - platform: state
+#     entity_id: binary_sensor.openclose_11
+#     from: 'on'
+#     to: 'off'
+#     for: 00:05:00
+#   condition:
+#   - condition: state
+#     entity_id: binary_sensor.openclose_11
+#     state: 'off'
+#     for: 00:05:00
+#   action:
+#   - service: light.turn_off
+#     entity_id: light.osram_bulb_2

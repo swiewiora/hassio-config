@@ -1,6 +1,5 @@
 default_config:
-http:
-  base_url: !secret base_url
+# http:
 #   ssl_certificate: /ssl/fullchain.pem
 #   ssl_key: /ssl/privkey.pem
 group: !include groups.yaml
@@ -104,4 +103,10 @@ switch:
     name: WOL - HP
   - platform: wake_on_lan
     mac: 00:E0:4C:69:3D:29
-    name: WOL - Realtek
+    name: WOL - Realtek - 3.0
+  - platform: wake_on_lan
+    mac: 00:E0:4C:68:01:B9
+    name: WOL - Realtek - C
+  - platform: wake_on_lan
+    mac: E4:7D:BD:63:76:86
+    name: Samsung - TV

@@ -1,0 +1,30 @@
+- id: '1612985288296'
+  alias: Motion-activated Light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      no_motion_wait: '300'
+      light_target:
+        entity_id: light.ikea_bulb_1
+      motion_entity: binary_sensor.presence_30
+- id: '1612991733273'
+  alias: Motion-activated Kitchen Light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      no_motion_wait: '300'
+      light_target:
+        entity_id: light.ikea_bulb_1
+      motion_entity: binary_sensor.presence_30
+- id: '1612991840569'
+  alias: Motion-activated Light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      no_motion_wait: '300'
+      motion_entity: binary_sensor.presence_30
+      light_target:
+        entity_id: light.ikea_bulb_1
