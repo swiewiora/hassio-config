@@ -109,4 +109,4 @@ switch:
     name: WOL - Realtek - C
   - platform: wake_on_lan
     mac: E4:7D:BD:63:76:86
-    name: Samsung - TV
+    name: WOL - Samsung TV
