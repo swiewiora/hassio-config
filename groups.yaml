@@ -19,10 +19,8 @@ my_all_lights:
 lights_notification:
   name: Lights that should be turned off while away
   entities:
-  - light.ikea_bulb_1
-  - light.ikea_bulb_2
-  - light.osram_bulb_1
-  - light.osram_bulb_2
+  - group.bulbs
+  - light.cable_onoff_2
   - switch.mija_1
   - switch.osram_plug_1
   - switch.smart_plug_14
