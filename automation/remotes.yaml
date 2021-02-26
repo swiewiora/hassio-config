@@ -93,78 +93,6 @@
   action:
   - service: switch.toggle
     entity_id: switch.mija_1
-# - id: '1570215042351'
-#   alias: remote ceiling light switch
-#   trigger:
-#   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-#     domain: deconz
-#     platform: device
-#     subtype: left
-#     type: remote_button_long_press
-#   - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-#     domain: deconz
-#     platform: device
-#     subtype: left
-#     type: remote_button_long_press
-#   action:
-#   - device_id: b79bdaab2df4423e82938a62556d1db6
-#     domain: light
-#     entity_id: light.cable_onoff_2
-#     type: toggle
-# - id: '1570215199936'
-#   alias: remote hood switch
-#   trigger:
-#   - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-#     domain: deconz
-#     platform: device
-#     subtype: turn_on
-#     type: remote_button_short_press
-#   action:
-#   - device_id: d964f0b9e6c64edd91d313b1d18f7434
-#     domain: light
-#     entity_id: light.cable_onoff
-#     type: toggle
-# - id: '1570215295449'
-#   alias: remote sink lamp switch
-#   trigger:
-#   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-#     domain: deconz
-#     platform: device
-#     subtype: dim_down
-#     type: remote_button_long_press
-#   - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-#     domain: deconz
-#     platform: device
-#     subtype: dim_down
-#     type: remote_button_long_press
-#   action:
-#   - device_id: a5eff051123d4f848250fd350f95d86b
-#     domain: switch
-#     entity_id: switch.osram_plug_1
-#     type: toggle
-# - id: '1570219780878'
-#   alias: remote oven switch
-#   trigger:
-#   - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-#     domain: deconz
-#     platform: device
-#     subtype: turn_on
-#     type: remote_button_long_press
-#   action:
-#   - service: switch.toggle
-#     entity_id: switch.osram_plug_2
-# - id: '1570484180533'
-#   alias: remote - wake on lan Mac
-#   trigger:
-#   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-#     domain: deconz
-#     platform: device
-#     subtype: turn_on
-#     type: remote_button_long_press
-#   action:
-#   - service: switch.toggle
-#     data:
-#       entity_id: switch.wol_realtek2
 - id: 'wake_on_lan'
   alias: remote - wake on lan ASUS
   trigger:
@@ -201,8 +129,8 @@
     type: toggle
 
 # Dimmers
-- id: 'remote_dim_living_room_bulb'
-  alias: remote dim living room bulb
+- id: 'remote_dim_osram_bulb_2'
+  alias: remote dim osram bulb 2
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
@@ -214,9 +142,9 @@
     data:
       entity_id: script.light_start_dimmer
       variables:
-        light: light.ikea_bulb_1
-- id: 'remote_dim_living_room_bulb_stop'
-  alias: remote dim living room bulb stop
+        light: light.osram_bulb_2
+- id: 'remote_dim_osramb_bulb_2_stop'
+  alias: remote dim osram bulb 2 stop
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
@@ -225,8 +153,8 @@
     type: remote_button_long_release
   action:
   - service: script.light_stop_dimmer
-- id: 'remote_dim_bedroom_room_bulb'
-  alias: remote dim bedroom bulb
+- id: 'remote_dim_ikea_bulb_2'
+  alias: remote dim ikea bulb 2
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
@@ -239,8 +167,8 @@
       entity_id: script.light_start_dimmer
       variables:
         light: light.ikea_bulb_2
-- id: 'remote_dim_bedroom_room_bulb_stop'
-  alias: remote dim bedroom bulb stop
+- id: 'remote_dim_ikea_bulb_2_stop'
+  alias: remote dim ikea bulb 2 stop
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
     domain: deconz
@@ -249,8 +177,8 @@
     type: remote_button_long_release
   action:
   - service: script.light_stop_dimmer
-- id: 'remote_dim_entrance_bulb'
-  alias: remote dim entrance bulb
+- id: 'remote_dim_ikea_bulb'
+  alias: remote dim ikea bulb
   trigger:
   - device_id: 938fddfde7134636aa05d12b4f4df16b
     domain: deconz
@@ -262,9 +190,9 @@
     data:
       entity_id: script.light_start_dimmer
       variables:
-        light: light.osram_bulb_2
-- id: 'remote_dim_entrance_bulb_stop'
-  alias: remote dim entrance bulb stop
+        light: light.ikea_bulb_1
+- id: 'remote_dim_ikea_bulb_stop'
+  alias: remote dim ikea bulb stop
   trigger:
   - device_id: 938fddfde7134636aa05d12b4f4df16b
     domain: deconz
@@ -273,27 +201,29 @@
     type: remote_button_long_release
   action:
   - service: script.light_stop_dimmer
-- id: 'remote_dim_bathroom_bulb'
-  alias: remote dim bathroom bulb
-  trigger:
-  - device_id: 938fddfde7134636aa05d12b4f4df16b
-    domain: deconz
-    platform: device
-    subtype: turn_off
-    type: remote_button_long_press
-  action:
-  - service: script.turn_on
-    data:
-      entity_id: script.light_start_dimmer
-      variables:
-        light: light.osram_bulb_1
-- id: 'remote_dim_bathroom_bulb_stop'
-  alias: remote dim bathroom bulb stop
-  trigger:
-  - device_id: 938fddfde7134636aa05d12b4f4df16b
-    domain: deconz
-    platform: device
-    subtype: turn_off
-    type: remote_button_long_release
-  action:
-  - service: script.light_stop_dimmer
+# - id: 'remote_dim_bathroom_bulb'
+#   alias: remote dim bathroom bulb
+#   trigger:
+#   - device_id: 938fddfde7134636aa05d12b4f4df16b
+#     domain: deconz
+#     platform: device
+#     subtype: turn_off
+#     type: remote_button_long_press
+#   action:
+#   - service: script.turn_on
+#     data:
+#       entity_id: script.light_start_dimmer
+#       variables:
+#         light: light.osram_bulb_1
+# - id: 'remote_dim_bathroom_bulb_stop'
+#   alias: remote dim bathroom bulb stop
+#   trigger:
+#   - device_id: 938fddfde7134636aa05d12b4f4df16b
+#     domain: deconz
+#     platform: device
+#     subtype: turn_off
+#     type: remote_button_long_release
+#   action:
+#   - service: script.light_stop_dimmer
+
+#
