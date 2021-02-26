@@ -151,47 +151,23 @@
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_bedroom_light
 
-# - id: presence-desk_lamp_off
-#   alias: presence - turn off desk lamp
-#   trigger:
-#   - platform: state
-#     entity_id: binary_sensor.presence_25
-#     from: 'on'
-#     to: 'off'
-#     for: 00:30:00
-#   action:
-#   - service: switch.turn_off
-#     entity_id: switch.osram_plug_2
-# - id: 'entrance_open'
-#   alias: Entrance door opened - turn on light
-#   trigger:
-#   - entity_id: binary_sensor.openclose_11
-#     from: 'off'
-#     platform: state
-#     to: 'on'
-#   condition:
-#     condition: or
-#     conditions:
-#     - condition: template
-#       value_template: '{{ state_attr(''sensor.lightlevel_29'', ''dark'') == true }}'
-#     - condition: template
-#       value_template: '{{ state_attr(''sensor.lightlevel_21'', ''dark'') == true }}'
-#   action:
-#   - service: light.turn_on
-#     entity_id: light.osram_bulb_2
-# - id: 'entrance_close'
-#   alias: Entrance door closed - turn off light
-#   trigger:
-#   - platform: state
-#     entity_id: binary_sensor.openclose_11
-#     from: 'on'
-#     to: 'off'
-#     for: 00:05:00
-#   condition:
-#   - condition: state
-#     entity_id: binary_sensor.openclose_11
-#     state: 'off'
-#     for: 00:05:00
-#   action:
-#   - service: light.turn_off
-#     entity_id: light.osram_bulb_2
+#Camera
+- id: presense-turn_camera_on
+  alias: presence - turn camera on
+  trigger:
+  - platform: state
+    entity_id: person.sebastian
+    to: not_home
+  action:
+  - service: switch.turn_on
+    entity_id: switch.smart_plug_16
+- id: presense-turn_camera_off
+  alias: presence - turn camera off
+  trigger:
+  - platform: state
+    entity_id: person.sebastian
+    to: home
+    for: 00:15:00
+  action:
+  - service: switch.turn_off
+    entity_id: switch.smart_plug_16
