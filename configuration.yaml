@@ -1,7 +1,4 @@
 default_config:
-# http:
-#   ssl_certificate: /ssl/fullchain.pem
-#   ssl_key: /ssl/privkey.pem
 group: !include groups.yaml
 automation: !include_dir_merge_list automation/
 script: !include scripts.yaml
@@ -25,7 +22,6 @@ sensor:
     display_options:
       - 'time'
       - 'time_date'
-ios:
 google_assistant:
   project_id: !secret google_assistant_id
   entity_config:
@@ -58,19 +54,6 @@ telegram_bot:
     api_key: !secret telegram_api_key
     allowed_chat_ids:
       - !secret telegram_chat_id
-asuswrt:
-  host: !secret asuswrt_host
-  username: !secret asuswrt_username
-  port: 35
-  ssh_key: /ssl/asuswrt_ssh
-  sensors:
-    - download_speed
-    - upload_speed
-    - devices
-device_tracker:
-  - platform: asuswrt
-    new_device_defaults:
-      track_new_devices: false
 climate:
   - platform: generic_thermostat
     name: Room Heating
