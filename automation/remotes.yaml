@@ -56,11 +56,55 @@
     type: remote_button_short_press
   action:
   - service: light.toggle
-    entity_id: light.ikea_bulb_2
+    entity_id: 
+    - light.ikea_bulb_2
 - id: 'remote_bathroom_2'
   alias: remote bathroom 2
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  action:
+  - service: light.toggle
+    entity_id: light.osram_bulb_2
+- id: 'remote_entrance'
+  alias: remote entrance
+  trigger:
+  - device_id: 380681cddea6d846fdaba9ba50076a8c
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: left
+    type: remote_button_short_press
+  action:
+  - service: light.toggle
+    entity_id: 
+    - light.ikea_gu10_bulb_1
+- id: 'remote_entrance_2'
+  alias: remote entrance 2
+  trigger:
+  - device_id: 380681cddea6d846fdaba9ba50076a8c
     domain: deconz
     platform: device
     subtype: turn_off
@@ -77,7 +121,8 @@
     type: remote_button_short_press
   action:
   - service: light.toggle
-    entity_id: light.osram_bulb_2
+    entity_id: 
+    - light.ikea_gu10_bulb_2
 
 # Switches
 - id: 'remote_LR_standing_lamp_switch'
@@ -247,29 +292,51 @@
     type: remote_button_long_release
   action:
   - service: script.light_stop_dimmer
-# - id: 'remote_dim_bathroom_bulb'
-#   alias: remote dim bathroom bulb
-#   trigger:
-#   - device_id: 938fddfde7134636aa05d12b4f4df16b
-#     domain: deconz
-#     platform: device
-#     subtype: turn_off
-#     type: remote_button_long_press
-#   action:
-#   - service: script.turn_on
-#     data:
-#       entity_id: script.light_start_dimmer
-#       variables:
-#         light: light.osram_bulb_1
-# - id: 'remote_dim_bathroom_bulb_stop'
-#   alias: remote dim bathroom bulb stop
-#   trigger:
-#   - device_id: 938fddfde7134636aa05d12b4f4df16b
-#     domain: deconz
-#     platform: device
-#     subtype: turn_off
-#     type: remote_button_long_release
-#   action:
-#   - service: script.light_stop_dimmer
-
-#
+- id: 'remote_dim_ikea_gu10_bulb_1'
+  alias: remote dim Ikea GU10 bulb
+  trigger:
+  - device_id: 380681cddea6d846fdaba9ba50076a8c
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_long_press
+  action:
+  - service: script.turn_on
+    data:
+      entity_id: script.light_start_dimmer
+      variables:
+        light: light.ikea_gu10_bulb_1
+- id: 'remote_dim_ikea_gu10_bulb_1_stop'
+  alias: remote dim Ikea GU10 bulb stop
+  trigger:
+  - device_id: 380681cddea6d846fdaba9ba50076a8c
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_long_release
+  action:
+  - service: script.light_stop_dimmer
+- id: 'remote_dim_ikea_gu10_bulb_2'
+  alias: remote dim Ikea GU10 bulb 2
+  trigger:
+  - device_id: 380681cddea6d846fdaba9ba50076a8c
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_long_press
+  action:
+  - service: script.turn_on
+    data:
+      entity_id: script.light_start_dimmer
+      variables:
+        light: light.ikea_gu10_bulb_2
+- id: 'remote_dim_ikea_gu10_bulb_2_stop'
+  alias: remote dim Ikea GU10 bulb stop
+  trigger:
+  - device_id: 380681cddea6d846fdaba9ba50076a8c
+    domain: deconz
+    platform: device
+    subtype: turn_off
+    type: remote_button_long_release
+  action:
+  - service: script.light_stop_dimmer

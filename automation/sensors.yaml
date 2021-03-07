@@ -158,7 +158,7 @@
   alias: presence - turn on entrance lights
   trigger:
   - platform: state
-    entity_id: binary_sensor.motion_sensor_4
+    entity_id: binary_sensor.motion_sensor
     from: 'off'
     to: 'on'
   condition:
