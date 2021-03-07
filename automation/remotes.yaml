@@ -1,15 +1,11 @@
-- id: '1570130746943'
-  alias: remote bathroom
+# Bulbs
+- id: 'remote-LR_bulb'
+  alias: remote - LR bulb
   trigger:
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
     subtype: dim_up
-    type: remote_button_short_press
-  - device_id: 977ed79430444f9dab60df1c7035c4fd
-    domain: deconz
-    platform: device
-    subtype: turn_on
     type: remote_button_short_press
   - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
     domain: deconz
@@ -18,8 +14,50 @@
     type: remote_button_short_press
   action:
   - service: light.toggle
+    entity_id: light.osram_bulb_1
+- id: 'remote-kitchen_bulb'
+  alias: remote - kitchen bulb
+  trigger:
+  - device_id: 938fddfde7134636aa05d12b4f4df16b
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_short_press
+  action:
+  - service: light.toggle
+    entity_id: light.ikea_bulb_1
+- id: 'remote_bathroom'
+  alias: remote bathroom
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5 # Ikea Remote
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  - device_id: 977ed79430444f9dab60df1c7035c4fd # Ikea On/Off
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff # Ikea Remote2
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_short_press
+  action:
+  - service: light.toggle
     entity_id: light.ikea_bulb_2
-- id: '1570212713167'
+- id: 'remote_bathroom_2'
   alias: remote bathroom 2
   trigger:
   - device_id: 977ed79430444f9dab60df1c7035c4fd
@@ -30,18 +68,20 @@
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
-    subtype: right
+    subtype: left
     type: remote_button_short_press
   - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
     domain: deconz
     platform: device
-    subtype: right
+    subtype: left
     type: remote_button_short_press
   action:
   - service: light.toggle
     entity_id: light.osram_bulb_2
-- id: '1570213166105'
-  alias: remote standing lamp switch
+
+# Switches
+- id: 'remote_LR_standing_lamp_switch'
+  alias: remote LR standing lamp switch
   trigger:
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
@@ -55,24 +95,8 @@
     type: remote_button_long_press
   action:
   - service: switch.toggle
-    entity_id: switch.mija_1
-- id: '1570214150331'
-  alias: remote desk lamp switch
-  trigger:
-  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-    domain: deconz
-    platform: device
-    subtype: right
-    type: remote_button_long_press
-  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-    domain: deconz
-    platform: device
-    subtype: right
-    type: remote_button_long_press
-  action:
-  - service: switch.toggle
-    entity_id: switch.smart_plug_14
-- id: '1570214365100'
+    entity_id: switch.schuko_plug_1
+- id: 'remote_kitchen_standing_light'
   alias: remote kitchen standing light
   trigger:
   - device_id: 938fddfde7134636aa05d12b4f4df16b
@@ -83,16 +107,61 @@
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz
     platform: device
+    subtype: right
+    type: remote_button_long_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: right
+    type: remote_button_long_press
+  action:
+  - service: switch.toggle
+    entity_id: switch.mija_1
+- id: 'remote_bedroom_light_switch'
+  alias: remote bedroom light switch
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
     subtype: left
-    type: remote_button_short_press
+    type: remote_button_long_press
   - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
     domain: deconz
     platform: device
     subtype: left
-    type: remote_button_short_press
+    type: remote_button_long_press
+  action:
+  - service: light.toggle
+    entity_id: light.cable_onoff_2
+- id: 'remote_LR_desk_lamp_switch'
+  alias: remote LR desk lamp switch
+  trigger:
+  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_long_press
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: dim_down
+    type: remote_button_long_press
   action:
   - service: switch.toggle
-    entity_id: switch.mija_1
+    entity_id: switch.mija_2
+- id: 'remote_staircase_light_switch'
+  alias: remote staircase light switch
+  trigger:
+  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
+    domain: deconz
+    platform: device
+    subtype: turn_on
+    type: remote_button_short_press
+  action:
+  - service: light.toggle
+    entity_id: light.cable_onoff
+
+# WOL
 - id: 'wake_on_lan'
   alias: remote - wake on lan ASUS
   trigger:
@@ -104,29 +173,6 @@
   action:
   - service: switch.turn_on
     entity_id: switch.wol_realtek
-- id: '1570606700515'
-  alias: remote - kitchen bulb
-  trigger:
-  - device_id: 938fddfde7134636aa05d12b4f4df16b
-    domain: deconz
-    platform: device
-    subtype: turn_on
-    type: remote_button_short_press
-  - device_id: 5617d4f82ce941e8bae8728066a1a1a5
-    domain: deconz
-    platform: device
-    subtype: dim_down
-    type: remote_button_short_press
-  - device_id: b0ca211ba3364ecd8a2d0540b9a371ff
-    domain: deconz
-    platform: device
-    subtype: dim_down
-    type: remote_button_short_press
-  action:
-  - device_id: ef2cce166005498b9b4a731b6bd01c3b
-    domain: light
-    entity_id: light.ikea_bulb_1
-    type: toggle
 
 # Dimmers
 - id: 'remote_dim_osram_bulb_2'
