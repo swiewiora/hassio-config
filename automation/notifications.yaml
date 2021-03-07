@@ -131,7 +131,6 @@
   - platform: state
     entity_id: 
     - person.sebastian
-    - device_tracker.mi9se_miphone
     from: home
     to: not_home
   - platform: state
@@ -142,9 +141,6 @@
     conditions:
     - condition: or
       conditions:
-      - condition: state
-        entity_id: device_tracker.mi9se_miphone
-        state: not_home
       - condition: state
         entity_id: person.sebastian
         state: not_home
