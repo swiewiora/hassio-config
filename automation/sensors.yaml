@@ -58,9 +58,9 @@
     entity_id: binary_sensor.motion_sensor_3
     from: 'off'
     to: 'on'
-  condition:
-  - condition: template
-    value_template: '{{ state_attr(''sensor.light_sensor_3'', ''dark'') == true }}'
+  # condition:
+  # - condition: template
+  #   value_template: '{{ state_attr(''sensor.light_sensor_3'', ''dark'') == true }}'
   action:
   - service: light.turn_on
     entity_id: 
@@ -112,6 +112,9 @@
     from: 'off'
     to: 'on'
   condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.light_sensor_2'', ''daylight'') == false }}' 
+    # kitchen light sensor
   - condition: template
     value_template: '{{ state_attr(''sensor.light_sensor_4'', ''dark'') == true }}'
   action:
