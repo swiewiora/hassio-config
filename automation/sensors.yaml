@@ -154,6 +154,61 @@
   - service: input_boolean.turn_off
     entity_id: input_boolean.motion_triggered_bedroom_light
 
+- id: presence-entrance_light_on
+  alias: presence - turn on entrance lights
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor_4
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.light_sensor_2'', ''daylight'') == false }}' 
+    # kitchen light sensor
+  - condition: template
+    value_template: '{{ state_attr(''sensor.light_sensor'', ''dark'') == true }}'
+  action:
+  - service: light.turn_on
+    entity_id: 
+    - light.ikea_gu10_bulb_1
+    - light.ikea_gu10_bulb_2
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.motion_triggered_entrance_light
+- id: presence-entrance_light_off
+  alias: presence - turn off entrance light
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor
+    from: 'on'
+    to: 'off'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_triggered_entrance_light
+      state: 'on'
+  action:
+  - service: light.turn_off
+    entity_id: 
+    - light.ikea_gu10_bulb_1
+    - light.ikea_gu10_bulb_2
+- id: presence-reset_entrance_boolean
+  alias: presence - reset motion_triggered_entrance_light
+  trigger:
+  - platform: state
+    entity_id: 
+    - light.ikea_gu10_bulb_1
+    - light.ikea_gu10_bulb_2
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.motion_triggered_entrance_light
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.motion_triggered_entrance_light
+
 #Camera
 - id: presense-turn_camera_on
   alias: presence - turn camera on

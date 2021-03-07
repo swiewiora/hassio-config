@@ -7,3 +7,4 @@ heating_timer:
 motion_triggered_bathroom_bulb:
 motion_triggered_kitchen_light:
 motion_triggered_bedroom_light:
+motion_triggered_entrance_light:
