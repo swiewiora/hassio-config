@@ -233,7 +233,7 @@
     to: not_home
   action:
   - service: switch.turn_on
-    entity_id: switch.smart_plug_16
+    entity_id: switch.schuko_plug_2
 - id: presense-turn_camera_off
   alias: presence - turn camera off
   trigger:
@@ -243,4 +243,4 @@
     for: 00:15:00
   action:
   - service: switch.turn_off
-    entity_id: switch.smart_plug_16
+    entity_id: switch.schuko_plug_2
