@@ -155,7 +155,23 @@
     entity_id: input_boolean.motion_triggered_bedroom_light
 
 - id: presence-entrance_light_on
-  alias: presence - turn on entrance lights
+  alias: presence - turn on entrance light 1
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''sensor.light_sensor'', ''dark'') == true }}'
+  action:
+  - service: light.turn_on
+    entity_id: 
+    - light.ikea_gu10_bulb_1
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.motion_triggered_entrance_light
+- id: presence-entrance_light_on_2
+  alias: presence - turn on entrance light 2 when dark
   trigger:
   - platform: state
     entity_id: binary_sensor.motion_sensor
@@ -170,7 +186,6 @@
   action:
   - service: light.turn_on
     entity_id: 
-    - light.ikea_gu10_bulb_1
     - light.ikea_gu10_bulb_2
   - service: input_boolean.turn_on
     entity_id: input_boolean.motion_triggered_entrance_light
