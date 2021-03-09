@@ -1,0 +1,24 @@
+- id: i7sw_charge_on
+  alias: i7SW Charge On
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.i7sw_battery_level_2
+    below: 50
+  condition:
+    condition: template
+    value_template: '{{ ''Home'' in state_attr(''sensor.i7sw_geocoded_location'', ''Zones'') }}'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.osram_plug_1
+- id: i7sw_charge_off
+  alias: i7SW Charge Off
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.i7sw_battery_level_2
+    above: 75
+  condition:
+    condition: template
+    value_template: '{{ ''Home'' in state_attr(''sensor.i7sw_geocoded_location'', ''Zones'') }}'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.osram_plug_1
