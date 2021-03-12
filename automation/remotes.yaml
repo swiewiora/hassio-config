@@ -208,7 +208,7 @@
 
 # WOL
 - id: 'wake_on_lan'
-  alias: remote - wake on lan ASUS
+  alias: remote - wake on lan
   trigger:
   - device_id: 5617d4f82ce941e8bae8728066a1a1a5
     domain: deconz

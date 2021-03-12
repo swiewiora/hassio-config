@@ -81,12 +81,15 @@ switch:
   - platform: wake_on_lan
     mac: D8:50:E6:01:E3:6F
     name: WOL - Asus
+    host: 10.20.30.20
   - platform: wake_on_lan
     mac: 38:22:E2:EF:A2:96
     name: WOL - HP
+    host: 10.20.30.28
   - platform: wake_on_lan
     mac: 00:E0:4C:69:3D:29
-    name: WOL - Realtek - 3.0
+    name: WOL - Realtek
+    host: 10.20.30.27
   - platform: wake_on_lan
     mac: 00:E0:4C:68:01:B9
     name: WOL - Realtek - C
