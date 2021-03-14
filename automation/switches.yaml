@@ -1,0 +1,14 @@
+- id: schuko_fix
+  alias: Workaround for Schuko Smart Plugs power button switching off USB ports
+  trigger:
+  - platform: state
+    entity_id: 
+    - switch.schuko_usb_1
+    - switch.schuko_usb_2
+    to: 'off'
+    for: 00:00:05
+  action:
+  - service: switch.turn_on
+    entity_id: 
+    - switch.schuko_usb_1
+    - switch.schuko_usb_2
